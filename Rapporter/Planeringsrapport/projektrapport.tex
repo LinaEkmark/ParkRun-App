@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
+\usepackage{newclude} %används för att inte få /newpage vid include
 
 \title{Projektplanering Parkrun App}
 \author{Vincent Stocks}
@@ -31,21 +32,15 @@
 \newpage
 \tableofcontents
 \newpage
-\section{Inledning}
 
-\section{Bakgrund}
-Parkrun är ett veckovis återkommande löp- eller springevent som tar plats på flera olika ställen i världen. Deltagare tar sig igenom en femkilometersbana som frivilliga funktionärer markerar ut.
 
-Funktionärerna spelar därmed en avgörande roll för att dessa Parkruns ska kunna genomföras. Dock finns det svårigheter med att få nog med funktionärer varje tillfälle, 
-%mest översatt från projektbeskrivningen
-\section{Syfte}
+\include*{inledning}
+\include*{bakgrund}
+\include*{syfte}
+\include*{mal}
+\include*{avgransningar}
+\include*{metod}
+\include*{tidsplan}
 
-\section{Mål}
-
-\section{Avgränsningar}
-
-\section{Metod}
-
-\section{Tidplan}
 
 \end{document}
