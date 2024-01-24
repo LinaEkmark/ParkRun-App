@@ -1,0 +1,42 @@
+Pauline vet inte om vi kan ha dagboken och tidsrapporten i samma dokument vi blev dock godkända. 
+Försök att alltid använda passivform men misshandla inga meningar.
+
+Boken visar sina user stories
+Vi vill intervjua volontärer. Vi kan kontakta Pauline som är volontär, vi borde även kontakta bildalsparken info finns på deras webbsida.
+
+Vårt mål är att prototypen är klar nästa vecka.
+
+Lina visar FIGMA
+Hur tillåter vi nya parkruns registreras? Manuellt av oss? Av parkrun admins? Av Parkrun Nordic?
+Pauline ska höra med parkrun nordic?
+Det vore bra om vi slapp göra det manuellt.
+
+Möjligt att admin ger admin till andra för att sprida ut workload?
+
+Liten tangent. 
+Vad behövs för att starta ett parkrrun? 
+Parkrun måste ha startat i landet, komunen måste godkänna samt lite para.
+En knapp med emailadress där man kan skicka in att man vill volontära för olika positioner
+Points of interest kan bli svårt beroende på API 
+Träd över väg, för mkt is 
+Hon trodde inte särskilt mkt på att anmäla folk som trillade.
+
+Markera om det är inställt, hur många volontärer som behövs. 
+
+Rollback på kartor ifall det blir en data läcka men hon trodde inte att det gjorde så mkt.
+Än så länge har vi inte gjort det så att man kan välja olika länder bara olika parkruns.
+Det är bra om vi kan visa att det är inställt.
+Har vi kollat färgkontrast poäng? (Color contrast scores) 
+Det är viktigt att appen är lättläst och lättanvänd
+
+Vi ska inte implementera löparna.
+Fokusera på kartan och placering av volontärer
+Googlemaps. Kartan ska kanske importeras av organisatören.
+Antalet volontärer är mer eller mindre känt.
+Man anmäler sig genom att skicka ett mail till organistörerna. 
+I Skatås krävs det minst 6 volontärer annars är det inställt.
+En regestreringsknapp för volontärer att signa upp sig på en dag.
+Vill vi addera positioner för volontärerna? Pauline visade en tabell för vilka positioner som finns. Kan vara svår att implementera dock.
+Kanske en knapp till att maila organisatörer.
+
+
