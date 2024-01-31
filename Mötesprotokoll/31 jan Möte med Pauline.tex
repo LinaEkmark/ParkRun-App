@@ -1,0 +1,139 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[swedish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\pagestyle{fancy} 
+\usepackage{pdfpages}
+%\usepackage[head=128pt]{geometry}
+\title{Mötesprotokoll}
+\author{Axel Carlstedt}
+\usepackage{geometry}
+\setlength{\footskip}{0.1pt}
+\setlength{\headheight}{80pt}
+\setlength{\topmargin}{0pt}
+\setlength\parindent{0pt}
+\fancypagestyle{style1}{
+
+\rhead{Mötesprotokoll\\}
+\renewcommand{\headrulewidth}{0pt}
+\cfoot{
+\makebox{}\\
+\makebox{}\\
+\hspace{1cm}\\}
+}
+\fancypagestyle{style2}{
+
+\rhead{Mötesprotokoll\\}
+\renewcommand{\headrulewidth}{0pt}
+\cfoot{}
+}
+\begin{document}
+\pagestyle{style1}
+
+
+\textbf{Datum:} 2024-01-31\\
+\textbf{Tid:} xx.xx-xx.xx\\
+\textbf{Plats:} Sal / Distans
+
+\makebox[\linewidth]{\rule{\linewidth}{0.4pt}}\\
+
+\section*{§1. Mötets öppnande}
+Vincent förklarar mötet öppnat kl xx.xx.
+
+\section*{§2. Deltagare}
+\begin{itemize}
+    \item Albin
+    \item Axel
+    \item Carl
+    \item Filip
+    \item Lina
+    \item Vincent
+    \item Pauline
+\end{itemize}
+
+
+\section*{§3. Inledning}
+Runda bordet, hur mår alla?
+\begin{itemize}
+    \item Albin
+    \item Axel
+    \item Carl
+    \item Filip
+    \item Lina
+    \item Vincent
+    
+\end{itemize}
+
+
+
+
+\section*{§4. Feedback och frågestund}
+    \subsection*{Vad har vi gjort}
+    Hon frågar lite om våra intervjuer och vad vi gjort sen förra mötet.
+    Hon har kontaktat folk om de får vara med i våra intervjuer.
+    Hon säger att Parkrun eventuellt inte vill vara med och att parkrun i stort idag använder laminerade papper typ. 
+    
+    \subsection*{Plan för intervjuer}
+    Hur ser vår plan ut med intervjuerna på lördag? Hon tycker att vi borde ta intervjuerna mellan de som springer snabbt och de som går eller innan alla går på fika efter loppet.\\
+    Det borde vara 7 volontärer på plats men just nu bara 5 anmälda.Emelie är "run director" Hon säger massa namn på alla som är volontärer.\\Emelie och Josefin borde gå att intervjua. Det ska börjar 9:30 men beror lite på hur lång tid det tar att dra igång det hela. Bra om vi är där 9:15. \\
+    Vissa svar kan handla om gamla appar. 
+    Försök att förklara att denna app har andra funktionaliteter.\\
+    Har du varit bandfunktionär precourse setup? 
+
+    \subsection*{Teknisk diskussion}
+    Vilken typ av information behöver vi spara? \\För att vara volontär behöver man vara en "runner" även om man aldrig springer.
+    Registerering kan tyckas vara onödigt för om det är för krångligt kommer folk inte använda det. 
+    Hon tror att enbart namn borde räcka samt säkrare ur en datasäkerhetssynpunkt.\\  
+    Varför ska vi ha accounts till volontärer? 
+
+   
+
+   
+    \subsection*{Om kartor och roller som volontär}
+    Addera zoom in och ut på kartan. Bra att ha en snabbastväg för att sätta ut markörer.(Vi tänker att vi skiter i detta och implementerar det senare om tid finnes) När detta är implementerat ska vi kunna byta overlay mellan snabbastevägen till kontroll och karta.
+    Hon hoppas på att en organisatör skulle orka sätta upp kartor.
+    Vem sätter upp kartan run director eller event director? 
+    Bättre om run director gör det.
+    Googlemaps verkar funka bra med react native \\
+    Rollsystem? Hon tycker det är en bra grej, bra att få instruktioner för vilken del man har, är du bandfunktionär ta den här vägen.
+    Vi ska kunna addera en roll och ge den instruktioner. De olika rollerna är bandfunktionär pre eventsetup och en Tailwalker.
+    Tailwalker samlar ihop alla skylta men inte alla beror lite på hur banan ser ut
+    Vi skulle kunna få en lista på vanliga volontärer, typ alla hon känner som är villiga att ställa upp men inte på hela databasen från stora Parkrun.
+    Vi vill kunna intergrera sista gångaren, markera att alla kontroller har samlat in. 
+
+    \subsection*{Random fakta}
+    Bildalsparken har svårare med funktionärer
+    Löparna är både svenska engelska portugiska 
+    Clipon on boards kanske finns ngn stans 
+
+
+    \subsection*{Om AI}
+    Här kan det vara bra att titta på föreläsningsanteckningarna då tbh större delen av föreläsningen handlade om hur vi skulle hantera AI \\
+    Var försiktiga vid användning av GPT hon vet inte riktigt vad chalmers säger. Hon kommer kolla våra referenser. Hon säger saker vi redan vet. Kan vara bra för struktur på kapitel. Vi måste vara tydliga när vi använder chatgpt. 
+
+    \section*{§5. Mötets avslutande}
+Vincent avslutar mötet kl 14:00
+\newpage
+\thispagestyle{style2}
+\makebox{}\\
+\makebox{}\\
+\makebox{}\\
+\makebox[0.4\linewidth]{\rule{0.4\linewidth}{0.4pt}} \hspace{1cm} \makebox[0.4\linewidth]{\rule{0.4\linewidth}{0.4pt}} \hspace{1cm}\\
+\makebox[0.4\linewidth]{Axel Carlstedt} \hspace{1cm}
+\makebox[0.4\linewidth]{Vincent Stocks} \hspace{1cm}\\
+\makebox[0.4\linewidth]{Mötessekreterare} \hspace{1cm}
+\makebox[0.4\linewidth]{Mötesordförande} \hspace{1cm}\\
+\makebox{}\\
+\makebox{}\\
+\makebox{}\\
+
+
+
+
+\end{document}
