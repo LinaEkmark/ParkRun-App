@@ -1,49 +1,14 @@
 \section{Metod}
 
-% What is here is good, but the main thing currently missing is explaining what the overall methodology is that you will be using, and motivating this choice. You mention Sprints later in this section, so I assume this will be some form of Agile development methodology. Explain this (with references) and motivate why this is a good choice, then move on to talking about tools such as Figma, interviews, react, etc.
-
-
-
-\subsection{Mål}
-Målet med detta kandidatarbete är att leda utvecklingen av en mobilapplikation från start till färdig produkt. Processen omfattar regelbundna veckomöten internt inom kandidatarbetsgruppen samt möten med handledaren för att säkerställa framsteg och tydlighet genom hela arbetsprocessen. Målgruppen för den planerade applikationen är volontärer och organisatörer av Parkrun.  Majoriteten av volontärer vid Parkrun Skatås är 30 eller äldre, men bland banfunktioner är snittåldern istället 60 och över. Detta mönster gäller även Billdals Parkrun där nästan alla ledare är runt 60 års åldern. Med en äldre målgrupp i åtanke är det därför viktigt att inte göra våran app komlicerad. Vårt övergripande mål är därför att skapa en applikation som är användarvänlig oavsett användarens erfarenhetsnivå med mobilapplikationer.
-
-
+I ett projekt med tidspress är det avgörande att bryta ner en stor uppgift i mindre delar för att underlätta utvecklingen \cite{agile}. För att säkerställa efterlevnaden av denna strategi för problemlösning, måste projektet välja en metod som effektivt implementerar detta tillvägagångssätt. Metoden som har valts är agile utveckling. Detta arbetssättet använder sig av att bryta ner stora problem i mindre utmaningar, och genom att använda sig av sprinter kan man säkerställa att arbetet hela tiden rör dig framåt. Enligt opentext medför denna metoden en bristfallig dokumentation vilket är något som inte är lämplig för denna typen av projek \cite{agile}.  Av denna anledningen kommer inte projektet följa en strikt agil utvecklingsmetod, utan kommer istället enbart ta insperation av dess karakteristiska sprinter som primär veckouppbyggnad.
 
 \subsection{Genomförande}
 
-Projektet kommer genomföras med hjälp av intervjuer och egen kreativitet utifrån Parkruns hemsida. 
-Under planeringsfasen av arbetet så kommer intervjuer med volontärer anordnas för att få den angivna målgruppens åsikter och önskemål. 
-Dessa åsikterna kommer ligga till grupp för majoriteten av appens funktionalitet för att skapa en så användbar applikation som möjligt. 
+Projektet kommer genomföras med hjälp av intervjuer och egen kreativitet utifrån Parkruns hemsida. Under planeringsfasen av arbetet kommer intervjuer med volontärer genomföras för att tidigt få feedback och insikter om vilka funktionen målgruppen är intresserad av. En första prototyp av produkten kommer skapas i Figma som är ett designverktyg. Denna modellen kommer sedan visas under intervjuerna för kunna få en direkt feedback på denna som sedan kan användas som grund under resterande designprocess. Fälttester kommer även utföras för att säkerställa att målet med en användarvänlig produkt uppnås. Detta kommer genomföras genom att efterfråga att Parkruns volontärer tester applikationen för att ge våran målgrupp en praktisk erfarenhet som sedan kan generera konstruktiv feedback. Med dessa studierna till grund kan applikationens positiva utveckling säkerställas\\
 
-En första prototyp av produkten kommer skapas i Figma som är ett designverktyg. Denna modellen kommer sedan visas under intervjuerna för 
-kunna få en direkt feedback på denna som sedan kan användas som grund under resterande designprocess.
+Alla veckor kommer utgå ifrån samma struktur. Måndagar kommer bestå av  ett planeringsmöte där veckans arbetsuppgifter kommer delas ut till alla gruppmedlemar. Dessa kommer att tilldelas baserat på intresse, erfarenhet och ansvarsområden inom gruppen, med syfte att skapa ett engagerande och effektivt arbetsklimat för alla gruppmedlemmar. På onsdagar kommer ett veckomöte hållas med projektets handledare för att diskutera eventuella frågor och tankar om arbetet. Dessa frågor kan då besvaras och användas för att fortsätta utvecklingsprocessen. Veckan kommer sedan avslutas med ett standup möte på fredagar där varje gruppmedlem redovisar för gruppen vad som hen har åstakommit under veckan. Under detta tillfälle kommer det även finnas tid för eventuella frågor som bör diskuteras i gruppen. Tisdagar och Torsdagar lämnas öppna för eget arbete för att prioritera tid till utveckling av produkten.\\
 
-
-%Apologies if this is a "lost in translation" thing, but I read this as that you will conduct field tests if necessary, rather than that you will definitely do them? I would say it is a definite necessity to observe volunteers using the app as there could be problems that you don't find otherwise, and you can be more sure of honest feedback from volunteers if you observe them in the field trying to use the app.
-Vid behov kommer fälttester utföras för att säkerställa att målet med en användarvänlig produkt uppnås. Detta kommer genomföras genom att 
-efterfråga att Parkruns volontärer tester applikationen för att ge våran målgrupp en praktisk erfarenhet som sedan kan generera konstruktiv feedback. 
-Med dessa studierna till grund kan applikationens positiva utveckling säkerställas
-
-\textbf{\textit{Här tänker jag att vi fortsätter skriva om hur vi tänker gå till väga med arbetet.}}
-
-%I'm assuming this will be redrafted and the "Mina tankar är" means it is still up for debate?
-\textit{Mina tankar är:
-\begin{itemize}
-    \item Hur veckorna kommer se ut (sprinter)
-    \item Vilka tekniker vi kommer använda (programspråk? Bibliotek? Design? etc)
-    \item Hur delar vi upp arbetet i gruppen?
-    \item Koppla samman tidsplan med genomförande?
-\end{itemize}}
-
-
-arbetssätt: agile
-
-veckor: måndagar är det planeringsmöte för veckan där arbetsuppgifter delas ut till alla i gruppen. Detta genom intresse och förmåga. ÄVen påverkar av allas arbetsområde
-
-tekniker: EXPO, react native, react-native-map, latex för text
-
-arbetsfördelning: delas ut efter intresse
-
+Detta projektet kommer skrivas med React Native för att kunna stödja både Android och IOS-plattformar utan att behöva två olika programkoder \cite{react}. React Native är ett välkänt programspråk för mobilapplikationsutveckling, vilket innebär att det finns omfattande stöd tillgängligt på internet för att svara på eventuella frågor. Dess grund bygger starkt på JavaScript, ett språk som är enkelt att både läsa och lära sig, vilket minimerar inlärningskravet. Detta är avgörande för att optimera utvecklingstiden för appen och minimera behovet av omfattande inlärning. React Native har även ett packet för kartvy som heter React Native Mapview. Detta är ett kostnadsfritt packet som integrerar en kartvy direkt i appen, vilket är avgörande då applikationen har en viktigt funktion i att visa information på en karta. Projektet kommer använda sig av programmet EXPO för att agera server för appen under dess utveckling. EXPO är ett program som körs direkt i terminalen på datorn och kopplas sedan samman med valfri telefon genom att skanna en QR-kod i EXPO GO's app. Programmet kan sedan köras direkt i telefonen behåller sedan sin anslutning så länge som servern körs. Detta är avgörande för att enkelt kunna inspektera appens utseende vid varje utvecklingssteg, oavsett vilket operativsystem som används. För att skriva snygga rapportet kommer Latex användas för rapportskrivning. Detta då det är gratis genom Chalmers och familijärt för alla gruppmedlemmar.
 
 \subsection{Datainsamling}
 
@@ -73,6 +38,10 @@ Som administratör vill jag se tydiga markeringar på kartan som indikerar vilke
 
 \vspace{1em}
 Som eventansvarig utan särskild teknisk kunskap vill jag kunna föra över kartan över mitt lokala lopp till appen, så att vi volontärer kan börja använda den. 
+
+
+\subsection{Mål}
+Målet med detta kandidatarbete är att leda utvecklingen av en mobilapplikation från start till färdig produkt. Processen omfattar regelbundna veckomöten internt inom kandidatarbetsgruppen samt möten med handledaren för att säkerställa framsteg och tydlighet genom hela arbetsprocessen. Målgruppen för den planerade applikationen är volontärer och organisatörer av Parkrun. Enligt vårt intervjuunderlag är majoriteten av volontärer vid Parkrun Skatås är 30 eller äldre, men bland banfunktioner är snittåldern istället 60 och över. Detta mönster gäller även Billdals Parkrun där nästan alla ledare är runt 60 års åldern. Med en äldre målgrupp i åtanke är det därför viktigt att inte göra våran app komlicerad. Vårt övergripande mål är därför att skapa en applikation som är användarvänlig oavsett användarens erfarenhetsnivå med mobilapplikationer.
 
 
 %Som en ...
