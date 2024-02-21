@@ -46,9 +46,14 @@ export default function DetailsScreen({ navigation }) {
             style={styles.searchbar}
             onChangeText={handleInputChange}
             value={Input}
-            defaultValue={"Search..."}
+            placeholder="Sök..."
+            placeholderTextColor={"#FFA300"}
           />
-          <Button title="Submit" onPress={handleSubmit}></Button>
+          <Button
+            title="Sök"
+            onPress={handleSubmit}
+            style={styles.Button}
+          ></Button>
         </View>
         <View style={styles.dropdownlists}>
           <Image
@@ -63,9 +68,7 @@ export default function DetailsScreen({ navigation }) {
             setValue={setValue}
             setItems={setItems}
             placeholder="Välj Land"
-            dropDownContainerStyle={{
-              backgroundColor: "#dfdfdf",
-            }}
+            backgroundColor="#dfdfdf"
           />
         </View>
       </View>
@@ -96,24 +99,34 @@ const styles = StyleSheet.create({
   },
   searchbar: {
     height: 40,
-    width: "50%",
+    width: "55%",
     borderColor: "#FFA300",
-    borderWidth: 2,
-    borderCurve: "continuous",
+    borderWidth: 3,
+    borderBottomLeftRadius: 6,
+    borderTopLeftRadius: 6,
     alignSelf: "center",
+    textAlign: "center",
+    color: "#FFA300",
   },
-  dropdownlistimage: {
-    width: "30%",
-    alignSelf: "center",
-    resizeMode: "contain",
-    borderWidth: 2,
-    borderColor: "#FFA300",
-  },
+  Button: {},
   dropdownlists: {
+    marginTop: 10,
     height: 40,
     width: "50%",
     borderCurve: "continuous",
     justifyContent: "center",
     flexDirection: "row",
+    backgroundColor: "",
+  },
+  dropdownlistimage: {
+    marginTop: "5%",
+    width: "35%",
+    height: "110%",
+    alignSelf: "center",
+    resizeMode: "contain",
+    borderWidth: 3,
+    borderBottomLeftRadius: 6,
+    borderTopLeftRadius: 6,
+    borderColor: "#FFA300",
   },
 });
