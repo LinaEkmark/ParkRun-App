@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-const CheckBox = ({ text }) => {
+const CheckBox = ({ text, modalHeaderText }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -32,7 +32,7 @@ const CheckBox = ({ text }) => {
         {/* Modal content */}
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-          <Text style ={styles.modalHeaderText}> Marker</Text>
+          <Text style ={styles.modalHeaderText}> {modalHeaderText}</Text>
 
               <View style={styles.photoBox}>
               <Text style={styles.modalText}>Här ska det vara en bild</Text>
