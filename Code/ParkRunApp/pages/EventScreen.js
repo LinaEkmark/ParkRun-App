@@ -20,11 +20,11 @@ export default function SandboxScreen({ navigation }) {
     
       <View>
         <CheckBox text="Check 1 - Ant hill" modalHeaderText="1"/>
-        <CheckBox text="Check 2 - Old Tree" modalHeaderText="2"/>
-        <CheckBox text="Check 3 - Power Line" modalHeaderText="3"/>
-        <CheckBox text="Check 4 - Sign" modalHeaderText="4"/>
-        <CheckBox text="Check 5 - Bush" modalHeaderText="5"/>
-        <CheckBox text="Check 6 - Large Rock" modalHeaderText="6"/>
+        <CheckBox text="Check 2 - Old Tree" modalHeaderText="Gamla trädet"/>
+        <CheckBox text="Check 3 - Power Line" modalHeaderText="Elledningen"/>
+        <CheckBox text="Check 4 - Sign" modalHeaderText="Skylten"/>
+        <CheckBox text="Check 5 - Bush" modalHeaderText="Busken"/>
+        <CheckBox text="Check 6 - Large Rock" modalHeaderText="Stora stenen"/>
 
       </View>
 
