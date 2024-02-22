@@ -2,6 +2,7 @@
 import React from "react";
 import { Text, View, Button, StyleSheet, Modal, TextInput} from "react-native";
 import CheckBox from "../Components/CheckBox";
+
 //import Dropdown from './DropDown';
 //import { StatusBar } from 'expo-status-bar';
 
@@ -15,6 +16,7 @@ export default function SandboxScreen({ navigation }) {
       <View style={styles.MapBox}>
 
       </View>
+
     
       <View>
         <CheckBox text="Check 1 - Ant hill"/>

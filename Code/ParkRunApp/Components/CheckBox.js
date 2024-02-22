@@ -1,6 +1,7 @@
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
-
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 const CheckBox = ({ text }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -43,10 +44,10 @@ const CheckBox = ({ text }) => {
               </View>
         
             <TouchableOpacity
-              style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+              style={styles.closeButtonContainer}
               onPress={toggleModal}
             >
-              <Text style={styles.textStyle}>Close</Text>
+                <FontAwesomeIcon icon = {faChevronLeft} size={24} color= {'black'}/>
             </TouchableOpacity>
           </View>
         </View>
@@ -129,8 +130,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'left',
     marginRight: 180
-}
-    ,
+},
+
+    closeButtonContainer:{
+        position: 'absolute',
+        top: 10,
+        left: 10,
+
+    },
+
+    closeButtonIcon:{
+        fontSize: 24,
+        color: 'red',
+
+
+    },
+   
+   
 
 
   photoBox: {
