@@ -20,7 +20,7 @@ export default function App() {
             options={{ headerShown: false }}
           ></Stack.Screen>
           <Stack.Screen name="Running" component={runningScreen}></Stack.Screen>
-          <Stack.Screen name="Event" component={eventScreen}></Stack.Screen>
+          <Stack.Screen name="Karta" component={eventScreen}></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     </>

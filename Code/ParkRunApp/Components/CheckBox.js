@@ -31,7 +31,17 @@ const CheckBox = ({ text }) => {
         {/* Modal content */}
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Modal Content Here</Text>
+          <Text style ={styles.modalHeaderText}> Marker</Text>
+
+              <View style={styles.photoBox}>
+              <Text style={styles.modalText}>Här ska det vara en bild</Text>
+
+              </View>
+
+              <View style={styles.greyBox}>
+                  <Text>Här ska det vara instruktoioner i hur man sätter upp skiten</Text>
+              </View>
+        
             <TouchableOpacity
               style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
               onPress={toggleModal}
@@ -42,7 +52,7 @@ const CheckBox = ({ text }) => {
         </View>
       </Modal>
     </View>
-  );
+  ); 
 };
 
 
@@ -104,13 +114,38 @@ const styles = StyleSheet.create({
 
   },
   modalText: {
-    marginBottom: 15,
-    textAlign: "center"
+    textAlign: "center",
+    fontSize: 12
   },
   textStyle: {
     color: "white",
     fontWeight: "bold",
     textAlign: "center"
+  },
+  modalHeader:{
+  
+  },
+  modalHeaderText: {
+    fontWeight: 'bold',
+    textAlign: 'left',
+    marginRight: 180
+}
+    ,
+
+
+  photoBox: {
+    backgroundColor: '#D9D9D9',
+    width: 270, // Adjust the width as needed
+    height: 180, // Adjust the height as needed
+    marginBottom: 20, // Adjust the margin bottom as needed
+    borderRadius: 10, // Adjust the border radius as needed
+  },
+  greyBox: {
+    backgroundColor: '#D9D9D9',
+    width: 270, // Adjust the width as needed
+    height: 100, // Adjust the height as needed
+    marginBottom: 20, // Adjust the margin bottom as needed
+    borderRadius: 10, // Adjust the border radius as needed
   }
 });
 

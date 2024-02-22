@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
+
 export default function DetailsScreen({ navigation }) {
   const [Input, setInput] = useState("");
   const [open, setOpen] = useState(false);
@@ -72,6 +73,11 @@ export default function DetailsScreen({ navigation }) {
           />
         </View>
       </View>
+  <View><Button     
+        title="Next page"
+        onPress={() => navigation.navigate("Karta")}
+      
+      ></Button></View>
     </View>
   );
 }
