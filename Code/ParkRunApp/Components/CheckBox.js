@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 const CheckBox = ({ text }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -47,7 +47,7 @@ const CheckBox = ({ text }) => {
               style={styles.closeButtonContainer}
               onPress={toggleModal}
             >
-                <FontAwesomeIcon icon = {faChevronLeft} size={24} color= {'black'}/>
+                <FontAwesomeIcon icon= {faXmark} size={28} color= {'black'}/>
             </TouchableOpacity>
           </View>
         </View>
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: "white",
     borderRadius: 10,
-    padding: 35,
+    padding: 20,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -123,19 +123,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center"
   },
-  modalHeader:{
-  
-  },
   modalHeaderText: {
+    fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'left',
-    marginRight: 180
-},
+    right: 80
+    },
 
-    closeButtonContainer:{
+  closeButtonContainer:{
         position: 'absolute',
         top: 10,
-        left: 10,
+        right: 10,
 
     },
   photoBox: {
@@ -144,14 +142,14 @@ const styles = StyleSheet.create({
     height: 180, // Adjust the height as needed
     marginBottom: 20, // Adjust the margin bottom as needed
     borderRadius: 10, // Adjust the border radius as needed
-  },
+    },
   greyBox: {
     backgroundColor: '#D9D9D9',
     width: 270, // Adjust the width as needed
-    height: 100, // Adjust the height as needed
+    height: 140, // Adjust the height as needed
     marginBottom: 20, // Adjust the margin bottom as needed
     borderRadius: 10, // Adjust the border radius as needed
-  }
+    }
 });
 
 export default CheckBox;
