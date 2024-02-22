@@ -138,17 +138,6 @@ const styles = StyleSheet.create({
         left: 10,
 
     },
-
-    closeButtonIcon:{
-        fontSize: 24,
-        color: 'red',
-
-
-    },
-   
-   
-
-
   photoBox: {
     backgroundColor: '#D9D9D9',
     width: 270, // Adjust the width as needed
