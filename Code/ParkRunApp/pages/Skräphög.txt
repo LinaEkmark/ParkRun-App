@@ -1,0 +1,40 @@
+<DropDownPicker
+open={open}
+value={value}
+items={items}
+setOpen={setOpen}
+setValue={setValue}
+setItems={setItems}
+placeholder="Välj Land"
+/>
+
+
+<View style={styles.selectList}>
+          <Image
+            source={require("../Design/swe-flag-400.png")}
+            style={styles.dropdownlistimage}
+          />
+          <SelectList
+            setSelected={setSelectedCountry}
+            data={Countries}
+            style={styles.selectList}
+            boxStyles={{ borderColor: "#FFA300" }}
+            dropdownStyles={{}}
+            inputStyles={{ fontSize: 25, color: "#FFA300" }}
+            maxHeight={200}
+            placeholder="Välj Stad"
+          />
+        </View>
+        <View style={styles.selectList}>
+          <Image
+            source={require("../Design/swe-flag-400.png")}
+            style={styles.dropdownlistimage}
+          />
+
+
+
+
+ <Image
+            source={require("../Design/swe-flag-400.png")}
+            style={styles.dropdownlistimage}
+          />
