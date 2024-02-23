@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: '80%',
-    height: '50%'
+    height: '60%'
 
   },
   modalText: {

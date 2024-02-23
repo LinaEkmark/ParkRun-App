@@ -75,7 +75,7 @@ export default function DetailsScreen({ navigation }) {
       </View>
   <View><Button     
         title="Next page"
-        onPress={() => navigation.navigate("Karta")}
+        onPress={() => navigation.navigate("Event Screen")}
       
       ></Button></View>
     </View>

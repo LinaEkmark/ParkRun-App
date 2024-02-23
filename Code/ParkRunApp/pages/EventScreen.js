@@ -1,10 +1,6 @@
-// Page1.js
 import React from "react";
 import { Text, View, Button, StyleSheet, Modal, TextInput} from "react-native";
 import CheckBox from "../Components/CheckBox";
-
-//import Dropdown from './DropDown';
-//import { StatusBar } from 'expo-status-bar';
 
 //import { CustomFonts } from './ParkRunFont'; // Behöver hjälp i hur jag ska importera egen font
 
@@ -19,7 +15,7 @@ export default function SandboxScreen({ navigation }) {
 
     
       <View>
-        <CheckBox text="Check 1 - Ant hill" modalHeaderText="1"/>
+        <CheckBox text="Check 1 - Ant hill" modalHeaderText="Myrstacken"/>
         <CheckBox text="Check 2 - Old Tree" modalHeaderText="Gamla trädet"/>
         <CheckBox text="Check 3 - Power Line" modalHeaderText="Elledningen"/>
         <CheckBox text="Check 4 - Sign" modalHeaderText="Skylten"/>
@@ -37,7 +33,7 @@ export default function SandboxScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },

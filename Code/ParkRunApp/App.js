@@ -38,7 +38,7 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen name="Running" component={runningScreen} />
-          <Stack.Screen name="Karta" component={eventScreen} />
+          <Stack.Screen name="Event Screen" component={eventScreen} />
         </Stack.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />
