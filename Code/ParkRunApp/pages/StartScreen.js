@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { View, Text, Button, Image, StyleSheet, TextInput } from "react-native";
 import DropdownStart from "../Components/DropdownStart";
 
-
 export default function DetailsScreen({ navigation }) {
   const [Input, setInput] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -102,7 +101,7 @@ export default function DetailsScreen({ navigation }) {
         <View style={styles.dropdownsections}>
           <Image source={require(sweFlag)} style={styles.dropdownlistimage} />
           <DropdownStart
-            items={Parkrun}
+            items={getParkrun(Parkrun)}
             placeholder="Välj Parkrun"
             initialValue={selectedParkrun}
             onValueChange={setSelectedParkrun}
@@ -114,11 +113,12 @@ export default function DetailsScreen({ navigation }) {
           onPress={console.log({ valdPark })}
         ></Button>
       </View>
-  <View><Button     
-        title="Next page"
-        onPress={() => navigation.navigate("Event Screen")}
-      
-      ></Button></View>
+      <View>
+        <Button
+          title="Next page"
+          onPress={() => navigation.navigate("Event Screen")}
+        ></Button>
+      </View>
     </View>
   );
 }
