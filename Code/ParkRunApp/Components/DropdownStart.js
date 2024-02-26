@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { Platform, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 
-const DropdownStart = ({ items, placeholder }) => {
-  const [selectedValue, setSelectedValue] = useState("");
+const DropdownStart = ({ items, placeholder, initialValue, onValueChange }) => {
+  const [selectedValue, setSelectedValue] = useState(initialValue);
 
+  const handleChange = (value) => {
+    setSelectedValue(value);
+    onValueChange(value);
+  };
   return (
     items &&
     items.length > 0 && (
       <RNPickerSelect
-        onValueChange={(value) => setSelectedValue(value)}
+        onValueChange={(value) => handleChange(value)}
         items={items}
         style={pickerSelectStyles}
         placeholder={{
@@ -36,7 +40,7 @@ const pickerSelectStyles = StyleSheet.create({
   },
   inputAndroid: {
     fontSize: 16,
-    paddingRight: 30, // to ensure the text is never behind the icon
+    paddingHorizontal: "15%", // to ensure the text is never behind the icon
     height: 40,
     borderColor: "#FFA300",
     borderWidth: 3,
@@ -44,7 +48,7 @@ const pickerSelectStyles = StyleSheet.create({
     borderTopRightRadius: 6,
     alignSelf: "center",
     textAlign: "center",
-    color: "#FFA300",
+    color: "#FFA330",
   },
 });
 
