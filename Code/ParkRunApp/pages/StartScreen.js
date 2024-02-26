@@ -1,25 +1,33 @@
-// Page1.js
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Button,
-  Image,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
+import { View, Text, Button, Image, StyleSheet, TextInput } from "react-native";
+import DropdownStart from "../Components/DropdownStart";
 
 
 export default function DetailsScreen({ navigation }) {
   const [Input, setInput] = useState("");
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    { label: "Sverige", value: "sve" },
-    { label: "England", value: "eng" },
-  ]);
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(null);
+  const [selectedParkrun, setSelectedParkrun] = useState(null);
+
+  const valdPark = [selectedCountry, selectedCity, selectedParkrun];
+
+  const Countries = [
+    { label: "Sverige", value: "sverige" },
+    { label: "Scottland", value: "scottland" },
+    { label: "England", value: "england" },
+  ];
+  const Cities = [
+    { label: "Göteborg", value: "göteborg", key: "sverige" },
+    { label: "Stockholm", value: "stockholm", key: "sverige" },
+    { label: "London", value: "London" },
+  ];
+
+  const Parkrun = [
+    { label: "Skatås", value: "skatås", key: "göteborg" },
+    { label: "Billdal", value: "billdal", key: "göteborg" },
+  ];
+
+  const sweFlag = "../Design/swe-flag-400.png";
 
   const handleInputChange = (Currentinput) => {
     setInput(Currentinput);
@@ -29,20 +37,37 @@ export default function DetailsScreen({ navigation }) {
     alert(`You entered: ${Input}`);
   };
 
-  return (
-    <View style={{ flex: 1, backgroundColor: "#2C233D" }}>
-      <View style={{ marginTop: "20%", backgroundColor: "white" }}>
-        <Image
-          source={require("../Design/parkrun-seeklogo.png")}
-          style={styles.image}
-        ></Image>
-      </View>
-      <View style={{ flex: 1, alignItems: "center" }}>
-        <Text style={styles.Text}>Welcome to the ParkRun</Text>
-        <Text style={styles.Text}>Volunteer Database!</Text>
-        <Text style={styles.Text2}>Find your park!</Text>
+  function getCities(country) {
+    if (country === "sverige") {
+      // If Sweden is selected, return only Göteborg and Stockholm
+      return Cities.filter((city) => city.key === "sverige");
+    } else {
+      // If any other country is selected, return all cities
+      return Cities;
+    }
+  }
+  function getParkruns(city) {
+    if (city === "Göteborg") {
+      // If Sweden is selected, return only Göteborg and Stockholm
+      return Parkrun.filter((parkrun) => parkrun.key === "göteborg");
+    } else {
+      // If any other country is selected, return all cities
+      return Cities;
+    }
+  }
 
-        <View style={{ flexDirection: "row" }}>
+  return (
+    <View style={styles.container}>
+      <Image
+        source={require("../Design/parkrun-seeklogo.png")}
+        style={styles.image}
+      />
+      <Text style={styles.text}>Welcome to the ParkRun</Text>
+      <Text style={styles.text}>Volunteer Database!</Text>
+      <Text style={styles.text2}>Find your park!</Text>
+
+      <View style={styles.main}>
+        <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchbar}
             onChangeText={handleInputChange}
@@ -53,25 +78,41 @@ export default function DetailsScreen({ navigation }) {
           <Button
             title="Sök"
             onPress={handleSubmit}
-            style={styles.Button}
-          ></Button>
-        </View>
-        <View style={styles.dropdownlists}>
-          <Image
-            source={require("../Design/swe-flag-400.png")}
-            style={styles.dropdownlistimage}
+            style={styles.Dropdownmenu}
           />
-          <DropDownPicker
-            open={open}
-            value={value}
-            items={items}
-            setOpen={setOpen}
-            setValue={setValue}
-            setItems={setItems}
+        </View>
+        <View style={styles.dropdownsections}>
+          <Image source={require(sweFlag)} style={styles.dropdownlistimage} />
+          <DropdownStart
+            items={Countries}
             placeholder="Välj Land"
-            backgroundColor="#dfdfdf"
+            initialValue={selectedCountry}
+            onValueChange={setSelectedCountry}
           />
         </View>
+        <View style={styles.dropdownsections}>
+          <Image source={require(sweFlag)} style={styles.dropdownlistimage} />
+          <DropdownStart
+            items={getCities(selectedCountry)}
+            placeholder="Välj Stad"
+            initialValue={selectedCity}
+            onValueChange={setSelectedCity}
+          />
+        </View>
+        <View style={styles.dropdownsections}>
+          <Image source={require(sweFlag)} style={styles.dropdownlistimage} />
+          <DropdownStart
+            items={Parkrun}
+            placeholder="Välj Parkrun"
+            initialValue={selectedParkrun}
+            onValueChange={setSelectedParkrun}
+          />
+        </View>
+
+        <Button
+          title="Hitta Parkrun"
+          onPress={console.log({ valdPark })}
+        ></Button>
       </View>
   <View><Button     
         title="Next page"
@@ -83,25 +124,38 @@ export default function DetailsScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#2C233D",
+    alignItems: "center",
+  },
   image: {
     width: 200,
     height: 150,
     alignSelf: "center",
     resizeMode: "contain",
+    backgroundColor: "white",
+    marginTop: "20%",
   },
-  view: {
-    flex: 1,
-  },
-  Text: {
+  text: {
     color: "#FFFFFF",
     fontWeight: "bold",
     fontSize: 25,
   },
-  Text2: {
+  text2: {
     color: "#FFFFFF",
     fontWeight: "bold",
     fontSize: 23,
     marginTop: "5%",
+  },
+  main: {
+    width: "100%",
+    flex: 1,
+    alignItems: "center",
+  },
+  searchContainer: {
+    flexDirection: "row",
+    marginTop: 20,
   },
   searchbar: {
     height: 40,
@@ -114,25 +168,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#FFA300",
   },
-  Button: {},
-  dropdownlists: {
-    marginTop: 10,
-    height: 40,
-    width: "50%",
-    borderCurve: "continuous",
-    justifyContent: "center",
+  button: {},
+  dropdownsections: {
     flexDirection: "row",
-    backgroundColor: "",
+    marginTop: 20,
   },
   dropdownlistimage: {
-    marginTop: "5%",
-    width: "35%",
-    height: "110%",
-    alignSelf: "center",
+    width: "15%",
     resizeMode: "contain",
+    borderColor: "#FFA300",
     borderWidth: 3,
     borderBottomLeftRadius: 6,
     borderTopLeftRadius: 6,
-    borderColor: "#FFA300",
+    maxHeight: 40,
   },
 });
