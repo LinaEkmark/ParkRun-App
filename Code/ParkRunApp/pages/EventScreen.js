@@ -4,15 +4,30 @@ import CheckBox from "../Components/CheckBox";
 import MapView from 'react-native-maps';
 
 //import { CustomFonts } from './ParkRunFont'; // Behöver hjälp i hur jag ska importera egen font
-
+/*
+const [region, setRegion] = useState({
+  latitude: 57.7075,
+  longitude: 11.9675,
+  latitudeDelta: 0.1,
+  longitudeDelta: 0.1,
+});
+*/
 
 export default function SandboxScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
           <View style={styles.container}> 
       
-      <MapView style={styles.MapBox}/>
-
+      <MapView 
+        style={styles.MapBox}
+        initialRegion={{
+          latitude: 57.7075,
+          longitude: 11.9675,
+          latitudeDelta: 0.1,
+          longitudeDelta: 0.1,
+        }}
+        //onRegionChangeComplete={(region) => setRegion(region)}
+      />
   
       <View>
         <CheckBox text="Check 1 - Ant hill" modalHeaderText="Myrstacken"/>
@@ -46,4 +61,6 @@ const styles = StyleSheet.create({
   
   },
 
+  
 });
+
