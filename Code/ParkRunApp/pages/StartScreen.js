@@ -51,7 +51,7 @@ export default function DetailsScreen({ navigation }) {
       return Parkrun.filter((parkrun) => parkrun.key === "göteborg");
     } else {
       // If any other country is selected, return all cities
-      return Cities;
+      return Parkrun;
     }
   }
 
@@ -101,7 +101,7 @@ export default function DetailsScreen({ navigation }) {
         <View style={styles.dropdownsections}>
           <Image source={require(sweFlag)} style={styles.dropdownlistimage} />
           <DropdownStart
-            items={getParkrun(Parkrun)}
+            items={getParkruns(Parkrun)}
             placeholder="Välj Parkrun"
             initialValue={selectedParkrun}
             onValueChange={setSelectedParkrun}
@@ -110,13 +110,11 @@ export default function DetailsScreen({ navigation }) {
 
         <Button
           title="Hitta Parkrun"
-          onPress={console.log({ valdPark })}
-        ></Button>
-      </View>
-      <View>
-        <Button
-          title="Next page"
-          onPress={() => navigation.navigate("Event Screen")}
+          onPress={() =>
+            navigation.navigate("Event Screen", {
+              selectedParkrun: selectedParkrun,
+            })
+          }
         ></Button>
       </View>
     </View>
