@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View, Button, StyleSheet, Modal, TextInput} from "react-native";
 import CheckBox from "../Components/CheckBox";
-import MapView from 'react-native-maps';
+import MapView, { Marker, Polyline } from 'react-native-maps';
 
+import colours from '../config/colours';
 //import { CustomFonts } from './ParkRunFont'; // Behöver hjälp i hur jag ska importera egen font
-/*
-const [region, setRegion] = useState({
-  latitude: 57.7075,
-  longitude: 11.9675,
-  latitudeDelta: 0.1,
-  longitudeDelta: 0.1,
-});
-*/
+
 
 export default function SandboxScreen({ navigation }) {
+
+  const [region, setRegion] = useState({
+    latitude: 57.7075,
+    longitude: 11.9675,
+    latitudeDelta: 0.1,
+    longitudeDelta: 0.1,
+  });
+
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
           <View style={styles.container}> 
@@ -21,14 +23,28 @@ export default function SandboxScreen({ navigation }) {
       <MapView 
         style={styles.MapBox}
         initialRegion={{
-          latitude: 57.7075,
-          longitude: 11.9675,
-          latitudeDelta: 0.1,
-          longitudeDelta: 0.1,
+          latitude: 57.7047,
+          longitude: 12.037,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
         }}
-        //onRegionChangeComplete={(region) => setRegion(region)}
-      />
-  
+        onRegionChangeComplete={(region) => setRegion(region)}
+      >
+        <Marker 
+          coordinate={skat0} 
+          pinColor={colours.secondary}
+        />
+        <Polyline
+          coordinates={[skat0, skat1, skat2, skat3]}
+          strokeColor={colours.primary}
+          strokeWidth={3}
+          lineDashPattern={[0]}
+        />
+      </MapView>
+
+      <Text>lat: {region.latitude}</Text>
+      <Text>lon: {region.longitude}</Text> 
+
       <View>
         <CheckBox text="Check 1 - Ant hill" modalHeaderText="Myrstacken"/>
         <CheckBox text="Check 2 - Old Tree" modalHeaderText="Gamla trädet"/>
@@ -64,3 +80,27 @@ const styles = StyleSheet.create({
   
 });
 
+const skat0 = {
+  latitude: 57.7047,
+  longitude: 12.037,
+  latitudeDelta: 0.01,
+  longitudeDelta: 0.01,
+};
+const skat1 = {
+  latitude: 57.7075,
+  longitude: 12.0408,
+  latitudeDelta: 0.01,
+  longitudeDelta: 0.01,
+};
+const skat2 = {
+  latitude: 57.7047,
+  longitude: 12.0447,
+  latitudeDelta: 0.01,
+  longitudeDelta: 0.01,
+};
+const skat3 = {
+  latitude: 57.7047,
+  longitude: 12.037,
+  latitudeDelta: 0.01,
+  longitudeDelta: 0.01,
+};
