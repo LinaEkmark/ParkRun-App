@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Text, View, Button, StyleSheet, Modal, TextInput} from "react-native";
 import CheckBox from "../Components/CheckBox";
-import MapView, { Marker, Polyline } from 'react-native-maps';
+import MapView, { Marker, Callout, Polyline } from 'react-native-maps';
 
 import colours from '../config/colours';
 //import { CustomFonts } from './ParkRunFont'; // Behöver hjälp i hur jag ska importera egen font
@@ -23,27 +23,32 @@ export default function SandboxScreen({ navigation }) {
       <MapView 
         style={styles.MapBox}
         initialRegion={{
-          latitude: 57.7047,
-          longitude: 12.037,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
+          latitude: 57.7054,
+          longitude: 12.0406,
+          latitudeDelta: 0.007,
+          longitudeDelta: 0.007,
         }}
         onRegionChangeComplete={(region) => setRegion(region)}
       >
         <Marker 
           coordinate={skat0} 
           pinColor={colours.secondary}
-        />
+          onPress={e => console.log(e.nativeEvent)}
+        >
+          <Callout>
+            <Text>Hej</Text>
+          </Callout>
+        </Marker>
         <Polyline
           coordinates={[skat0, skat1, skat2, skat3]}
           strokeColor={colours.primary}
           strokeWidth={3}
-          lineDashPattern={[0]}
+          lineDashPattern={[5,1]}
         />
       </MapView>
 
       <Text>lat: {region.latitude}</Text>
-      <Text>lon: {region.longitude}</Text> 
+      <Text>long: {region.longitude}</Text> 
 
       <View>
         <CheckBox text="Check 1 - Ant hill" modalHeaderText="Myrstacken"/>
