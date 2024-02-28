@@ -18,12 +18,16 @@ export default function DetailsScreen({ navigation }) {
   const Cities = [
     { label: "Göteborg", value: "göteborg", key: "sverige" },
     { label: "Stockholm", value: "stockholm", key: "sverige" },
-    { label: "London", value: "London" },
+    { label: "London", value: "london", key: "england" },
+    { label: "Edinburg", value: "edinburg", key: "scottland" },
   ];
 
-  const Parkrun = [
+  const Parkruns = [
     { label: "Skatås", value: "skatås", key: "göteborg" },
     { label: "Billdal", value: "billdal", key: "göteborg" },
+    { label: "Haga", value: "haga", key: "stockholm" },
+    { label: "London", value: "london", key: "london" },
+    { label: "Edinburg", value: "edinburg", key: "edinburg" },
   ];
 
   const sweFlag = "../Design/swe-flag-400.png";
@@ -37,21 +41,23 @@ export default function DetailsScreen({ navigation }) {
   };
 
   function getCities(country) {
-    if (country === "sverige") {
+    if (country) {
+      console.log("Selected country:", country);
       // If Sweden is selected, return only Göteborg and Stockholm
-      return Cities.filter((city) => city.key === "sverige");
+      return Cities.filter((city) => city.key === country);
     } else {
       // If any other country is selected, return all cities
       return Cities;
     }
   }
   function getParkruns(city) {
-    if (city === "Göteborg") {
-      // If Sweden is selected, return only Göteborg and Stockholm
-      return Parkrun.filter((parkrun) => parkrun.key === "göteborg");
+    if (city) {
+      console.log("Selected city:", city);
+      // If a city is selected, return parkruns filtered by that city
+      return Parkruns.filter((parkrun) => parkrun.key === city);
     } else {
-      // If any other country is selected, return all cities
-      return Parkrun;
+      // If no city is selected, return all parkruns
+      return Parkruns;
     }
   }
 
@@ -101,7 +107,7 @@ export default function DetailsScreen({ navigation }) {
         <View style={styles.dropdownsections}>
           <Image source={require(sweFlag)} style={styles.dropdownlistimage} />
           <DropdownStart
-            items={getParkruns(Parkrun)}
+            items={getParkruns(selectedCity)}
             placeholder="Välj Parkrun"
             initialValue={selectedParkrun}
             onValueChange={setSelectedParkrun}
@@ -112,6 +118,8 @@ export default function DetailsScreen({ navigation }) {
           title="Hitta Parkrun"
           onPress={() =>
             navigation.navigate("Event Screen", {
+              selectedCountry: selectedCountry,
+              selectedCity: selectedCity,
               selectedParkrun: selectedParkrun,
             })
           }
@@ -166,7 +174,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#FFA300",
   },
-  button: {},
+  button: { marginTop: 20 },
   dropdownsections: {
     flexDirection: "row",
     marginTop: 20,
