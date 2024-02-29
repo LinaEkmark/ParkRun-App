@@ -1,14 +1,35 @@
-import React, { useState } from "react";
-import { View, Text, Button, Image, StyleSheet, TextInput } from "react-native";
+import React, { useState, useRef } from "react";
+import {
+  View,
+  Text,
+  Button,
+  Image,
+  StyleSheet,
+  TextInput,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import DropdownStart from "../Components/DropdownStart";
+import ButtonStart from "../Components/Button";
 
 export default function DetailsScreen({ navigation }) {
   const [Input, setInput] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
   const [selectedParkrun, setSelectedParkrun] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [filteredParkruns, setFilteredParkruns] = useState([]);
+  const textInputRef = useRef(null);
 
   const valdPark = [selectedCountry, selectedCity, selectedParkrun];
+
+  const onRefresh = () => {
+    setRefreshing(true); // Set refreshing to true when the user pulls down to refresh
+    // You can add any additional logic here to update data or perform other actions
+    setTimeout(() => {
+      setRefreshing(false); // Set refreshing back to false after data has been updated
+    }, 2000); // Simulating a delay here, replace with actual data fetching code
+  };
 
   const Countries = [
     { label: "Sverige", value: "sverige" },
@@ -28,12 +49,34 @@ export default function DetailsScreen({ navigation }) {
     { label: "Haga", value: "haga", key: "stockholm" },
     { label: "London", value: "london", key: "london" },
     { label: "Edinburg", value: "edinburg", key: "edinburg" },
+    { label: "Stoke", value: "stoke", key: "stoke" },
   ];
+
+  const filterParkruns = (text) => {
+    const filteredParkruns = Parkruns.filter((parkrun) =>
+      parkrun.label.toLowerCase().startsWith(text.toLowerCase())
+    );
+    if (filteredParkruns.length === 0) {
+      setFilteredParkruns([
+        {
+          label: "Parkrun saknas",
+        },
+      ]);
+    } else {
+      setFilteredParkruns(filteredParkruns);
+    }
+  };
+
+  const dropdownHeight =
+    filteredParkruns.length > 0
+      ? Math.min(filteredParkruns.length * 30, 200)
+      : 0;
 
   const sweFlag = "../Design/swe-flag-400.png";
 
   const handleInputChange = (Currentinput) => {
     setInput(Currentinput);
+    filterParkruns(Currentinput);
   };
 
   const handleSubmit = () => {
@@ -74,17 +117,36 @@ export default function DetailsScreen({ navigation }) {
       <View style={styles.main}>
         <View style={styles.searchContainer}>
           <TextInput
+            ref={textInputRef}
             style={styles.searchbar}
             onChangeText={handleInputChange}
             value={Input}
             placeholder="Sök..."
             placeholderTextColor={"#FFA300"}
           />
-          <Button
-            title="Sök"
-            onPress={handleSubmit}
-            style={styles.Dropdownmenu}
-          />
+          <ButtonStart onPress={handleSubmit} title="Sök" />
+        </View>
+
+        <View style={styles.flatlistBox}>
+          {Input.length > 0 && (
+            <FlatList
+              style={[styles.autocompleteList, { maxHeight: dropdownHeight }]}
+              data={filteredParkruns}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={styles.flatListItemContainer}
+                  onPress={() => {
+                    setSelectedParkrun(item);
+                    setInput(item.label); // Update TextInput value
+                    textInputRef.current.blur(); // Hide keyboard
+                  }}
+                >
+                  <Text style={styles.FlatlistItemText}>{item.label}</Text>
+                </TouchableOpacity>
+              )}
+              keyExtractor={(item) => item.value}
+            />
+          )}
         </View>
         <View style={styles.dropdownsections}>
           <Image source={require(sweFlag)} style={styles.dropdownlistimage} />
@@ -114,8 +176,7 @@ export default function DetailsScreen({ navigation }) {
           />
         </View>
 
-        <Button
-          title="Hitta Parkrun"
+        <ButtonStart
           onPress={() =>
             navigation.navigate("Event Screen", {
               selectedCountry: selectedCountry,
@@ -123,7 +184,8 @@ export default function DetailsScreen({ navigation }) {
               selectedParkrun: selectedParkrun,
             })
           }
-        ></Button>
+          title="Hitta Parkrun"
+        ></ButtonStart>
       </View>
     </View>
   );
@@ -173,8 +235,9 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     textAlign: "center",
     color: "#FFA300",
+    fontSize: 25,
+    fontWeight: "bold",
   },
-  button: { marginTop: 20 },
   dropdownsections: {
     flexDirection: "row",
     marginTop: 20,
@@ -187,5 +250,23 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 6,
     borderTopLeftRadius: 6,
     maxHeight: 40,
+  },
+  flatlistBox: {
+    marginRight: "25%",
+    width: "55%",
+  },
+  autocompleteList: {
+    backgroundColor: "#2C233D",
+    borderColor: "#FFA300",
+    borderWidth: 3,
+    borderRadius: 4,
+  },
+  flatListItemContainer: {
+    alignItems: "center", // Horizontally center the content
+  },
+  FlatlistItemText: {
+    color: "#FFA300",
+    marginHorizontal: 20,
+    fontSize: 16,
   },
 });
