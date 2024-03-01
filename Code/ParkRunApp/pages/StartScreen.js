@@ -101,7 +101,7 @@ export default function DetailsScreen({ navigation }) {
         <View style={styles.dropdownsections}>
           <Image source={require(sweFlag)} style={styles.dropdownlistimage} />
           <DropdownStart
-            items={getParkrun(Parkrun)}
+            items={getParkruns(Parkrun)}
             placeholder="Välj Parkrun"
             initialValue={selectedParkrun}
             onValueChange={setSelectedParkrun}

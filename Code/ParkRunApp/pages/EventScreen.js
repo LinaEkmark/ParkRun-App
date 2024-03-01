@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, Button, StyleSheet, Modal, TextInput} from "react-native";
 import CheckBox from "../Components/CheckBox";
+import MapView from 'react-native-maps';
 
 //import { CustomFonts } from './ParkRunFont'; // Behöver hjälp i hur jag ska importera egen font
 
@@ -10,6 +11,10 @@ export default function SandboxScreen({ navigation }) {
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
           <View style={styles.container}> 
       <View style={styles.MapBox}>
+
+        <MapView style={styles.map} />
+
+
 
       </View>
 
@@ -43,7 +48,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#D9D9D9',
     justifyContent: 'center',
     borderRadius: 10, // Gör såhär för att få snyggare hörn på boxar
+    //flex:1,
   
+  },
+  map: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 10,
   },
 
 });
