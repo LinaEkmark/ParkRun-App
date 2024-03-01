@@ -60,6 +60,8 @@ export default function DetailsScreen({ navigation }) {
       setFilteredParkruns([
         {
           label: "Parkrun saknas",
+          value: "parkrun_saknas",
+          key: "parkrun_saknas",
         },
       ]);
     } else {
