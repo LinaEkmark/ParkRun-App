@@ -20,6 +20,7 @@ export default function DetailsScreen({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
   const [filteredParkruns, setFilteredParkruns] = useState([]);
   const textInputRef = useRef(null);
+  const [openFlatList, setopenFlatList] = useState(true);
 
   const valdPark = [selectedCountry, selectedCity, selectedParkrun];
 
@@ -79,6 +80,7 @@ export default function DetailsScreen({ navigation }) {
   const handleInputChange = (Currentinput) => {
     setInput(Currentinput);
     filterParkruns(Currentinput);
+    setopenFlatList(true);
   };
 
   const handleSubmit = () => {
@@ -130,7 +132,7 @@ export default function DetailsScreen({ navigation }) {
         </View>
 
         <View style={styles.flatlistBox}>
-          {Input.length > 0 && (
+          {Input.length > 0 && openFlatList && (
             <FlatList
               style={[styles.autocompleteList, { maxHeight: dropdownHeight }]}
               data={filteredParkruns}
@@ -141,6 +143,7 @@ export default function DetailsScreen({ navigation }) {
                     setSelectedParkrun(item);
                     setInput(item.label); // Update TextInput value
                     textInputRef.current.blur(); // Hide keyboard
+                    setopenFlatList(false);
                   }}
                 >
                   <Text style={styles.FlatlistItemText}>{item.label}</Text>
