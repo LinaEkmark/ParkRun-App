@@ -8,9 +8,12 @@ import {
   TextInput,
   FlatList,
   TouchableOpacity,
+  ScrollView,
+  RefreshControl,
 } from "react-native";
 import DropdownStart from "../Components/DropdownStart";
 import ButtonStart from "../Components/Button";
+import Logo from "../Design/parkrunAppLogo.png";
 
 export default function DetailsScreen({ navigation }) {
   const [Input, setInput] = useState("");
@@ -23,14 +26,6 @@ export default function DetailsScreen({ navigation }) {
   const [openFlatList, setopenFlatList] = useState(true);
 
   const valdPark = [selectedCountry, selectedCity, selectedParkrun];
-
-  const onRefresh = () => {
-    setRefreshing(true); // Set refreshing to true when the user pulls down to refresh
-    // You can add any additional logic here to update data or perform other actions
-    setTimeout(() => {
-      setRefreshing(false); // Set refreshing back to false after data has been updated
-    }, 2000); // Simulating a delay here, replace with actual data fetching code
-  };
 
   const Countries = [
     { label: "Sverige", value: "sverige" },
@@ -110,10 +105,7 @@ export default function DetailsScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require("../Design/parkrun-seeklogo.png")}
-        style={styles.image}
-      />
+      <Image source={Logo} style={styles.image} />
       <Text style={styles.text}>Welcome to the ParkRun</Text>
       <Text style={styles.text}>Volunteer Database!</Text>
       <Text style={styles.text2}>Find your park!</Text>
@@ -171,7 +163,7 @@ export default function DetailsScreen({ navigation }) {
             onValueChange={setSelectedCity}
           />
         </View>
-        <View style={styles.dropdownsections}>
+        <View style={[styles.dropdownsections, { marginBottom: "8%" }]}>
           <Image source={require(sweFlag)} style={styles.dropdownlistimage} />
           <DropdownStart
             items={getParkruns(selectedCity)}
@@ -180,17 +172,18 @@ export default function DetailsScreen({ navigation }) {
             onValueChange={setSelectedParkrun}
           />
         </View>
-
-        <ButtonStart
-          onPress={() =>
-            navigation.navigate("Event Screen", {
-              selectedCountry: selectedCountry,
-              selectedCity: selectedCity,
-              selectedParkrun: selectedParkrun,
-            })
-          }
-          title="Hitta Parkrun"
-        ></ButtonStart>
+        <View>
+          <ButtonStart
+            onPress={() =>
+              navigation.navigate("Event Screen", {
+                selectedCountry: selectedCountry,
+                selectedCity: selectedCity,
+                selectedParkrun: selectedParkrun,
+              })
+            }
+            title="Hitta Parkrun"
+          ></ButtonStart>
+        </View>
       </View>
     </View>
   );
@@ -203,11 +196,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: 200,
-    height: 150,
+    width: "100%",
+    height: "20%",
     alignSelf: "center",
     resizeMode: "contain",
-    backgroundColor: "white",
     marginTop: "20%",
   },
   text: {
@@ -245,7 +237,7 @@ const styles = StyleSheet.create({
   },
   dropdownsections: {
     flexDirection: "row",
-    marginTop: 20,
+    marginTop: "8%",
   },
   dropdownlistimage: {
     width: "15%",
