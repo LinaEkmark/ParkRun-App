@@ -4,15 +4,12 @@ import CheckBox from "../Components/CheckBox";
 
 //import { CustomFonts } from './ParkRunFont'; // Behöver hjälp i hur jag ska importera egen font
 
-export default function SandboxScreen({ navigation, route }) {
-  const { selectedCountry, selectedCity, selectedParkrun } = route.params;
+export default function SandboxScreen({ navigation }) {
+  //const { selectedCountry, selectedCity, selectedParkrun } = route.params;
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <View style={styles.container}>
         <View style={styles.MapBox}></View>
-        <Button title={selectedCountry}></Button>
-        <Button title={selectedCity}></Button>
-        <Button title={selectedParkrun}></Button>
         <View>
           <CheckBox text="Check 1 - Ant hill" modalHeaderText="Myrstacken" />
           <CheckBox text="Check 2 - Old Tree" modalHeaderText="Gamla trädet" />

@@ -174,12 +174,14 @@ export default function DetailsScreen({ navigation }) {
         </View>
         <View>
           <ButtonStart
-            onPress={() =>
-              navigation.navigate("Event Screen", {
-                selectedCountry: selectedCountry,
-                selectedCity: selectedCity,
-                selectedParkrun: selectedParkrun,
-              })
+            onPress={
+              () => navigation.navigate("Event Screen")
+
+              // navigation.navigate("Event Screen", {
+              //   selectedCountry: selectedCountry,
+              //   selectedCity: selectedCity,
+              //   selectedParkrun: selectedParkrun,
+              // })
             }
             title="Hitta Parkrun"
           ></ButtonStart>
