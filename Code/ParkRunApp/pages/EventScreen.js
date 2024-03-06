@@ -6,8 +6,8 @@ import MapView, { Marker, Callout, Polyline } from 'react-native-maps';
 import colours from '../config/colours';
 //import { CustomFonts } from './ParkRunFont'; // Behöver hjälp i hur jag ska importera egen font
 
-
-export default function SandboxScreen({ navigation }) {
+export default function SandboxScreen({ navigation, route }) {
+  const { selectedCountry, selectedCity, selectedParkrun } = route.params;
 
   const [region, setRegion] = useState({
     latitude: 57.7075,
@@ -49,6 +49,11 @@ export default function SandboxScreen({ navigation }) {
 
       <Text>lat: {region.latitude}</Text>
       <Text>long: {region.longitude}</Text> 
+      
+      <Button title={selectedCountry}></Button>
+      <Button title={selectedCity}></Button>
+      <Button title={selectedParkrun}></Button>
+        
 
       <View>
         <CheckBox text="Check 1 - Ant hill" modalHeaderText="Myrstacken"/>
@@ -65,21 +70,19 @@ export default function SandboxScreen({ navigation }) {
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
   },
   MapBox: {
     width: 355,
     height: 334,
-    //backgroundColor: '#D9D9D9',
-    justifyContent: 'center',
+    backgroundColor: "#D9D9D9",
+    justifyContent: "center",
     borderRadius: 10, // Gör såhär för att få snyggare hörn på boxar
-  
   },
 
   
