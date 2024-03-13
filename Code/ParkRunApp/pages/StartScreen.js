@@ -12,10 +12,11 @@ import {
   RefreshControl,
 } from "react-native";
 import DropdownStart from "../Components/DropdownStart";
-import ButtonStart from "../Components/Button";
+import ButtonStart from "../Components/ButtonStart";
+import SearchButtonStart from "../Components/searchButtonStart";
 import Logo from "../Design/parkrunAppLogo.png";
 
-export default function DetailsScreen({ navigation }) {
+export default function StartScreen({ navigation }) {
   const [Input, setInput] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
@@ -65,7 +66,7 @@ export default function DetailsScreen({ navigation }) {
     }
   };
 
-  const dropdownHeight =
+  const autocompleteListMaxHeight =
     filteredParkruns.length > 0
       ? Math.min(filteredParkruns.length * 30, 200)
       : 0;
@@ -120,13 +121,16 @@ export default function DetailsScreen({ navigation }) {
             placeholder="Sök..."
             placeholderTextColor={"#FFA300"}
           />
-          <ButtonStart onPress={handleSubmit} title="Sök" />
+          <SearchButtonStart onPress={handleSubmit} style={styles.seachImage} />
         </View>
 
         <View style={styles.flatlistBox}>
           {Input.length > 0 && openFlatList && (
             <FlatList
-              style={[styles.autocompleteList, { maxHeight: dropdownHeight }]}
+              style={[
+                styles.autocompleteList,
+                { maxHeight: autocompleteListMaxHeight },
+              ]}
               data={filteredParkruns}
               renderItem={({ item }) => (
                 <TouchableOpacity
@@ -183,7 +187,9 @@ export default function DetailsScreen({ navigation }) {
               //   selectedParkrun: selectedParkrun,
               // })
             }
-            title="Hitta Parkrun"
+            title="Confirm"
+            buttonStyle={styles.confirmbutton}
+            textStyle={styles.textConfirmButton}
           ></ButtonStart>
         </View>
       </View>
@@ -222,13 +228,13 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     flexDirection: "row",
-    marginTop: 20,
+    alignItems: "center",
   },
   searchbar: {
-    height: 40,
+    height: "70%",
     width: "55%",
     borderColor: "#FFA300",
-    borderWidth: 3,
+    borderWidth: 1,
     borderBottomLeftRadius: 6,
     borderTopLeftRadius: 6,
     alignSelf: "center",
@@ -237,15 +243,27 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
   },
+  seachImage: {
+    borderWidth: 1,
+    borderTopRightRadius: 6,
+    borderBottomRightRadius: 6,
+    borderColor: "#FFA330",
+    maxHeight: "70%",
+    maxWidth: 100,
+    justifyContent: "center",
+    alignItems: "center",
+
+    //overflow: "hidden",
+  },
   dropdownsections: {
     flexDirection: "row",
-    marginTop: "8%",
+    marginTop: "5%",
   },
   dropdownlistimage: {
     width: "15%",
     resizeMode: "contain",
     borderColor: "#FFA300",
-    borderWidth: 3,
+    borderWidth: 1,
     borderBottomLeftRadius: 6,
     borderTopLeftRadius: 6,
     maxHeight: 40,
@@ -267,5 +285,20 @@ const styles = StyleSheet.create({
     color: "#FFA300",
     marginHorizontal: 20,
     fontSize: 16,
+  },
+  confirmbutton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: "15%",
+    paddingVertical: "5%",
+    borderRadius: 6,
+    elevation: 3,
+    backgroundColor: "#00CEAE",
+  },
+  textConfirmButton: {
+    fontSize: 34,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "#2B233D",
   },
 });

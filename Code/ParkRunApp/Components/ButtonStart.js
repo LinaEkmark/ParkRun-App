@@ -1,11 +1,11 @@
 import React from "react";
 import { Text, Pressable } from "react-native";
 
-export default function ButtonStart(props) {
-  const { onPress, title, buttonStyle, textStyle } = props;
+const ButtonStart = ({ onPress, title, buttonStyle, textStyle }) => {
   return (
     <Pressable style={buttonStyle} onPress={onPress}>
       <Text style={textStyle}>{title}</Text>
     </Pressable>
   );
-}
+};
+export default ButtonStart;
