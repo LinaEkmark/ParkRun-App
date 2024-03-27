@@ -6,8 +6,11 @@ export default function Page() {
     <><View>
       <Text>Hello world!</Text>
       <Button
-        onPress={Test}
+        onPress={loadDoc}
         title='Test' />
+      <Button
+        onPress={logFetched}
+        title='Log' />
     </View>
     <View id="tset">
         <Text>ö</Text>
@@ -15,34 +18,24 @@ export default function Page() {
 );
 }
 
-const kml = 
-`    <Folder>
-<name>Skyltar</name>
-<Placemark>
-  <name>Start och mål</name>
-  <styleUrl>#icon-1661-000000-nodesc</styleUrl>
-  <Point>
-    <coordinates>
-      12.0378104,57.7035969,0
-    </coordinates>
-  </Point>
-</Placemark>
-<Placemark>
-  <name>Höger</name>
-  <description>Leder deltagarna mot åttan. Efter start vänds skylten så att
-  den leder deltagarna i slutspurten.</description>
-  <styleUrl>#icon-1899-0288D1</styleUrl>
-  <Point>
-    <coordinates>
-      12.0384246,57.7038155,0
-    </coordinates>
-  </Point>
-</Placemark>
-</Folder>`;
-let parser = new DOMParser();
-let kmlparse = parser.parseFromString(kml,"text/xml");
+let kml, parser, kmlparse;
+function loadDoc() {
+  let xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && 
+      this.status == 200) {
+        test(this);
+      }
+  };
+  xmlhttp.open("GET", "Skatås Parkrun.kml", true);
+  xmlhttp.send();
+}
 
-function Test () {
+function test(xml) {
   document.getElementById("tset").innerHTML=
-  kmlparse.getElementsByTagName("name")[1].childNodes[0].nodeValue;
+  xml.responseXML.getElementsByTagName("name")[1].childNodes[0].nodeValue;
+}
+
+function logFetched() {
+  console.log(kml);
 }
