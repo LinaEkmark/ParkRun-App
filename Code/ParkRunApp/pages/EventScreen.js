@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Text, View, Button, StyleSheet, Modal, TextInput} from "react-native";
+import { Text, View, Button, StyleSheet, Modal, TextInput } from "react-native";
 import CheckBox from "../Components/CheckBox";
-import MapView, { Marker, Callout, Polyline } from 'react-native-maps';
+import MapView, { Marker, Callout, Polyline } from "react-native-maps";
 
-import colours from '../config/colours';
+import colours from "../config/colours";
 //import { CustomFonts } from './ParkRunFont'; // Behöver hjälp i hur jag ska importera egen font
 
 export default function SandboxScreen({ navigation, route }) {
@@ -18,54 +18,49 @@ export default function SandboxScreen({ navigation, route }) {
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-          <View style={styles.container}> 
-      
-      <MapView 
-        style={styles.MapBox}
-        initialRegion={{
-          latitude: 57.7054,
-          longitude: 12.0406,
-          latitudeDelta: 0.007,
-          longitudeDelta: 0.007,
-        }}
-        onRegionChangeComplete={(region) => setRegion(region)}
-      >
-        <Marker 
-          coordinate={skat0} 
-          pinColor={colours.secondary}
-          onPress={e => console.log(e.nativeEvent)}
+      <View style={styles.container}>
+        <MapView
+          style={styles.MapBox}
+          initialRegion={{
+            latitude: 57.7054,
+            longitude: 12.0406,
+            latitudeDelta: 0.007,
+            longitudeDelta: 0.007,
+          }}
+          onRegionChangeComplete={(region) => setRegion(region)}
         >
-          <Callout>
-            <Text>Hej</Text>
-          </Callout>
-        </Marker>
-        <Polyline
-          coordinates={[skat0, skat1, skat2, skat3]}
-          strokeColor={colours.primary}
-          strokeWidth={3}
-          lineDashPattern={[5,1]}
-        />
-      </MapView>
+          <Marker
+            coordinate={skat0}
+            pinColor={colours.secondary}
+            onPress={(e) => console.log(e.nativeEvent)}
+          >
+            <Callout>
+              <Text>Hej</Text>
+            </Callout>
+          </Marker>
+          <Polyline
+            coordinates={[skat0, skat1, skat2, skat3]}
+            strokeColor={colours.primary}
+            strokeWidth={3}
+            lineDashPattern={[5, 1]}
+          />
+        </MapView>
 
-      <Text>lat: {region.latitude}</Text>
-      <Text>long: {region.longitude}</Text> 
-      
-      <Button title={selectedCountry}></Button>
-      <Button title={selectedCity}></Button>
-      <Button title={selectedParkrun}></Button>
-        
+        <Text>lat: {region.latitude}</Text>
+        <Text>long: {region.longitude}</Text>
 
-      <View>
-        <CheckBox text="Check 1 - Ant hill" modalHeaderText="Myrstacken"/>
-        <CheckBox text="Check 2 - Old Tree" modalHeaderText="Gamla trädet"/>
-        <CheckBox text="Check 3 - Power Line" modalHeaderText="Elledningen"/>
-        <CheckBox text="Check 4 - Sign" modalHeaderText="Skylten"/>
-        <CheckBox text="Check 5 - Bush" modalHeaderText="Busken"/>
-        <CheckBox text="Check 6 - Large Rock" modalHeaderText="Stora stenen"/>
-
+        <View>
+          <CheckBox text="Check 1 - Ant hill" modalHeaderText="Myrstacken" />
+          <CheckBox text="Check 2 - Old Tree" modalHeaderText="Gamla trädet" />
+          <CheckBox text="Check 3 - Power Line" modalHeaderText="Elledningen" />
+          <CheckBox text="Check 4 - Sign" modalHeaderText="Skylten" />
+          <CheckBox text="Check 5 - Bush" modalHeaderText="Busken" />
+          <CheckBox
+            text="Check 6 - Large Rock"
+            modalHeaderText="Stora stenen"
+          />
+        </View>
       </View>
-
-    </View>
     </View>
   );
 }
@@ -84,8 +79,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 10, // Gör såhär för att få snyggare hörn på boxar
   },
-
-  
 });
 
 const skat0 = {
