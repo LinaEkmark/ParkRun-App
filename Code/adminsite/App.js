@@ -8,9 +8,6 @@ export default function Page() {
       <Button
         onPress={loadDoc}
         title='Test' />
-      <Button
-        onPress={logFetched}
-        title='Log' />
     </View>
     <View id="tset">
         <Text>ö</Text>
@@ -18,7 +15,6 @@ export default function Page() {
 );
 }
 
-let kml, parser, kmlparse;
 function loadDoc() {
   let xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function() {
@@ -32,10 +28,12 @@ function loadDoc() {
 }
 
 function test(xml) {
-  document.getElementById("tset").innerHTML=
-  xml.responseXML.getElementsByTagName("name")[1].childNodes[0].nodeValue;
+  //document.getElementById("tset").innerHTML=
+  //xml.responseXML.getElementsByTagName("name")[1].childNodes[0].nodeValue;
+  let input = xml.responseXML;
+  let output;
+  let point = input.getElementsByTagName("Point")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue;
+  console.log(point);
 }
 
-function logFetched() {
-  console.log(kml);
-}
+  //TODO: Dela upp lat- och lng-koordinater
