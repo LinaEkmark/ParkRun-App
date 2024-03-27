@@ -179,7 +179,7 @@ export default function StartScreen({ navigation }) {
         <View>
           <ButtonStart
             onPress={
-              () => navigation.navigate("Event Screen")
+              () => navigation.navigate("Karta")
 
               // navigation.navigate("Event Screen", {
               //   selectedCountry: selectedCountry,
