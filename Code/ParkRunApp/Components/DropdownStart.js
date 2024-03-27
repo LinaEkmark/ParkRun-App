@@ -43,7 +43,7 @@ const pickerSelectStyles = StyleSheet.create({
     paddingHorizontal: "15%", // to ensure the text is never behind the icon
     height: 40,
     borderColor: "#FFA300",
-    borderWidth: 3,
+    borderWidth: 1,
     borderBottomRightRadius: 6,
     borderTopRightRadius: 6,
     alignSelf: "center",
