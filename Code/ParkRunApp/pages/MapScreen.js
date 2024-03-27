@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Text, View, Button, StyleSheet, Modal, TextInput } from "react-native";
+import {
+  Text,
+  View,
+  Button,
+  StyleSheet,
+  Modal,
+  TextInput,
+  ScrollView,
+} from "react-native";
 import CheckBox from "../Components/CheckBox";
 import MapView, { Marker, Callout, Polyline } from "react-native-maps";
 
@@ -30,37 +38,38 @@ export default function MapScreen({ navigation, route }) {
   ];
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <View style={styles.container}>
-        <MapView
-          style={styles.MapBox}
-          initialRegion={{
-            latitude: 57.7054,
-            longitude: 12.0406,
-            latitudeDelta: 0.007,
-            longitudeDelta: 0.007,
-          }}
-          onRegionChangeComplete={(region) => setRegion(region)}
-        >
-          <Marker
-            coordinate={skat0}
-            pinColor={colours.secondary}
-            onPress={(e) => console.log(e.nativeEvent)}
+    <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <View style={styles.container}>
+          <MapView
+            style={styles.MapBox}
+            initialRegion={{
+              latitude: 57.7054,
+              longitude: 12.0406,
+              latitudeDelta: 0.007,
+              longitudeDelta: 0.007,
+            }}
+            onRegionChangeComplete={(region) => setRegion(region)}
           >
-            <Callout>
-              <Text>Hej</Text>
-            </Callout>
-          </Marker>
-          <Polyline
-            coordinates={[skat0, skat1, skat2, skat3]}
-            strokeColor={colours.primary}
-            strokeWidth={3}
-            lineDashPattern={[5, 1]}
-          />
-        </MapView>
-        <Text>lat: {region.latitude}</Text>
-        <Text>long: {region.longitude}</Text>
-        {/* <View>
+            <Marker
+              coordinate={skat0}
+              pinColor={colours.secondary}
+              onPress={(e) => console.log(e.nativeEvent)}
+            >
+              <Callout>
+                <Text>Hej</Text>
+              </Callout>
+            </Marker>
+            <Polyline
+              coordinates={[skat0, skat1, skat2, skat3]}
+              strokeColor={colours.primary}
+              strokeWidth={3}
+              lineDashPattern={[5, 1]}
+            />
+          </MapView>
+          <Text>lat: {region.latitude}</Text>
+          <Text>long: {region.longitude}</Text>
+          {/* <View>
             <CheckBox text="Check 1 - Ant hill" modalHeaderText="Myrstacken" />
             <CheckBox
               text="Check 2 - Old Tree"
@@ -77,13 +86,17 @@ export default function MapScreen({ navigation, route }) {
               modalHeaderText="Stora stenen"
             />
           </View> */}
-        <View style={styles.checkBoxContainer}>{checkBoxes()}</View>
+          <View style={styles.checkBoxContainer}>{checkBoxes()}</View>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollViewContainer: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: "white",
