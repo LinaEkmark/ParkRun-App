@@ -7,8 +7,6 @@ import colours from "../config/colours";
 //import { CustomFonts } from './ParkRunFont'; // Behöver hjälp i hur jag ska importera egen font
 
 export default function SandboxScreen({ navigation, route }) {
-  const { selectedCountry, selectedCity, selectedParkrun } = route.params;
-
   const [region, setRegion] = useState({
     latitude: 57.7075,
     longitude: 11.9675,
