@@ -67,9 +67,9 @@ export default function MapScreen({ navigation, route }) {
               lineDashPattern={[5, 1]}
             />
           </MapView>
-          <Text>lat: {region.latitude}</Text>
-          <Text>long: {region.longitude}</Text>
-          {/* <View>
+          <Text>lat: {region.latitude.toFixed(4)}</Text>
+          <Text>long: {region.longitude.toFixed(4)}</Text>
+          {/* <View>overflow: "hidden", 
             <CheckBox text="Check 1 - Ant hill" modalHeaderText="Myrstacken" />
             <CheckBox
               text="Check 2 - Old Tree"
