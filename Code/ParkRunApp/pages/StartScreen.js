@@ -269,13 +269,13 @@ const styles = StyleSheet.create({
     maxHeight: 40,
   },
   flatlistBox: {
-    marginRight: "25%",
+    marginRight: "16%",
     width: "55%",
   },
   autocompleteList: {
     backgroundColor: "#2C233D",
     borderColor: "#FFA300",
-    borderWidth: 3,
+    borderWidth: 2,
     borderRadius: 4,
   },
   flatListItemContainer: {
