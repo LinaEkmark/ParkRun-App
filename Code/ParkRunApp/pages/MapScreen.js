@@ -15,6 +15,8 @@ import colours from "../config/colours";
 //import { CustomFonts } from './ParkRunFont'; // Behöver hjälp i hur jag ska importera egen font
 
 export default function MapScreen({ navigation, route }) {
+  const { selectedParkrun } = route.params;
+
   const [region, setRegion] = useState({
     latitude: 57.7075,
     longitude: 11.9675,
@@ -22,11 +24,20 @@ export default function MapScreen({ navigation, route }) {
     longitudeDelta: 0.1,
   });
 
-  function checkBoxes() {
-    return checkBoxText.map((text, index) => (
-      <CheckBox key={index} text={text[0]} modalHeaderText={text[1]} />
-    ));
-  }
+  const regionPositions = {
+    skatås: {
+      latitude: 57.7054,
+      longitude: 12.0406,
+      latitudeDelta: 0.007,
+      longitudeDelta: 0.007,
+    },
+    billdal: {
+      latitude: 58.7054,
+      longitude: 12.0406,
+      latitudeDelta: 0.007,
+      longitudeDelta: 0.007,
+    },
+  };
 
   const checkBoxText = [
     ["Check 1 - Ant hill", "Myrstacken"],
@@ -37,18 +48,23 @@ export default function MapScreen({ navigation, route }) {
     ["Check 6 - Large Rock", "Stora stenen"],
   ];
 
+  function checkBoxes() {
+    return checkBoxText.map((text, index) => (
+      <CheckBox key={index} text={text[0]} modalHeaderText={text[1]} />
+    ));
+  }
+
+  function getRegionPosition(parkrun) {
+    return regionPositions[parkrun];
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <View style={styles.container}>
           <MapView
             style={styles.MapBox}
-            initialRegion={{
-              latitude: 57.7054,
-              longitude: 12.0406,
-              latitudeDelta: 0.007,
-              longitudeDelta: 0.007,
-            }}
+            initialRegion={getRegionPosition(selectedParkrun)}
             onRegionChangeComplete={(region) => setRegion(region)}
           >
             <Marker
