@@ -63,7 +63,6 @@ export default function MapScreen({ navigation, route }) {
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <View style={styles.container}>
-          <KMLReader></KMLReader>
           <MapView
             style={styles.MapBox}
             initialRegion={getRegionPosition(selectedParkrun)}
