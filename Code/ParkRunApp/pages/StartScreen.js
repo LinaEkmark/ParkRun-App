@@ -80,7 +80,10 @@ export default function StartScreen({ navigation }) {
   };
 
   const handleSubmit = () => {
-    alert(`You entered: ${Input}`);
+    console.log(selectedParkrun);
+    navigation.navigate("Karta", {
+      selectedParkrun: selectedParkrun,
+    });
   };
 
   function getCities(country) {
@@ -136,7 +139,7 @@ export default function StartScreen({ navigation }) {
                 <TouchableOpacity
                   style={styles.flatListItemContainer}
                   onPress={() => {
-                    setSelectedParkrun(item);
+                    setSelectedParkrun(item.value);
                     setInput(item.label); // Update TextInput value
                     textInputRef.current.blur(); // Hide keyboard
                     setopenFlatList(false);
@@ -178,14 +181,10 @@ export default function StartScreen({ navigation }) {
         </View>
         <View>
           <ButtonStart
-            onPress={
-              () => navigation.navigate("Event Screen")
-
-              // navigation.navigate("Event Screen", {
-              //   selectedCountry: selectedCountry,
-              //   selectedCity: selectedCity,
-              //   selectedParkrun: selectedParkrun,
-              // })
+            onPress={() =>
+              navigation.navigate("Karta", {
+                selectedParkrun: selectedParkrun,
+              })
             }
             title="Confirm"
             buttonStyle={styles.confirmbutton}
@@ -269,13 +268,13 @@ const styles = StyleSheet.create({
     maxHeight: 40,
   },
   flatlistBox: {
-    marginRight: "25%",
+    marginRight: "16%",
     width: "55%",
   },
   autocompleteList: {
     backgroundColor: "#2C233D",
     borderColor: "#FFA300",
-    borderWidth: 3,
+    borderWidth: 2,
     borderRadius: 4,
   },
   flatListItemContainer: {
