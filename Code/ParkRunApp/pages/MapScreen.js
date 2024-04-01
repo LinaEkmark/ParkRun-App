@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import CheckBox from "../Components/CheckBox";
 import MapView, { Marker, Callout, Polyline } from "react-native-maps";
+import KMLReader from "../Utils/KMLreader";
 
 import colours from "../config/colours";
 //import { CustomFonts } from './ParkRunFont'; // Behöver hjälp i hur jag ska importera egen font
@@ -62,6 +63,7 @@ export default function MapScreen({ navigation, route }) {
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <View style={styles.container}>
+          <KMLReader></KMLReader>
           <MapView
             style={styles.MapBox}
             initialRegion={getRegionPosition(selectedParkrun)}
