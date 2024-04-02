@@ -40,18 +40,25 @@ export default function MapScreen({ navigation, route }) {
     },
   };
 
-  const checkBoxText = [
-    ["Check 1 - Ant hill", "Myrstacken"],
-    ["Check 2 - Old Tree", "Gamla trädet"],
-    ["Check 3 - Power Line", "Elledningen"],
-    ["Check 4 - Sign", "Skylten"],
-    ["Check 5 - Bush", "Busken"],
-    ["Check 6 - Large Rock", "Stora stenen"],
+  const routeCoordinates = [
+    { latitude: 57.7047, longitude: 12.037 },
+    { latitude: 57.7075, longitude: 12.0408 },
+    { latitude: 57.7047, longitude: 12.0447 },
+    { latitude: 57.7047, longitude: 12.037 },
   ];
 
+  const checkBoxText = {
+    "Check 1 - Ant hill": "Myrstacken",
+    "Check 2 - Old Tree": "Gamla trädet",
+    "Check 3 - Power Line": "Elledningen",
+    "Check 4 - Sign": "Skylten",
+    "Check 5 - Bush": "Busken",
+    "Check 6 - Large Rock": "Stora stenen",
+  };
+
   function checkBoxes() {
-    return checkBoxText.map((text, index) => (
-      <CheckBox key={index} text={text[0]} modalHeaderText={text[1]} />
+    return Object.entries(checkBoxText).map(([text, modalHeaderText]) => (
+      <CheckBox key={text} text={text} modalHeaderText={modalHeaderText} />
     ));
   }
 
@@ -78,7 +85,7 @@ export default function MapScreen({ navigation, route }) {
               </Callout>
             </Marker>
             <Polyline
-              coordinates={[skat0, skat1, skat2, skat3]}
+              coordinates={routeCoordinates}
               strokeColor={colours.primary}
               strokeWidth={3}
               lineDashPattern={[5, 1]}
