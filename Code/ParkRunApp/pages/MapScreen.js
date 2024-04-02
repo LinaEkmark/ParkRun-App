@@ -18,13 +18,6 @@ import colours from "../config/colours";
 export default function MapScreen({ navigation, route }) {
   const { selectedParkrun } = route.params;
 
-  const [region, setRegion] = useState({
-    latitude: 57.7075,
-    longitude: 11.9675,
-    latitudeDelta: 0.1,
-    longitudeDelta: 0.1,
-  });
-
   const regionPositions = {
     skatås: {
       latitude: 57.7054,
@@ -40,11 +33,25 @@ export default function MapScreen({ navigation, route }) {
     },
   };
 
+  const [region, setRegion] = useState(regionPositions[selectedParkrun]);
+
   const routeCoordinates = [
     { latitude: 57.7047, longitude: 12.037 },
     { latitude: 57.7075, longitude: 12.0408 },
     { latitude: 57.7047, longitude: 12.0447 },
     { latitude: 57.7047, longitude: 12.037 },
+  ];
+
+  const markers = [
+    { coordinate: { latitude: 57.7047, longitude: 12.037 }, title: "Marker 1" },
+    {
+      coordinate: { latitude: 57.7075, longitude: 12.0408 },
+      title: "Marker 2",
+    },
+    {
+      coordinate: { latitude: 57.7047, longitude: 12.0447 },
+      title: "Marker 3",
+    },
   ];
 
   const checkBoxText = {
@@ -75,15 +82,17 @@ export default function MapScreen({ navigation, route }) {
             initialRegion={getRegionPosition(selectedParkrun)}
             onRegionChangeComplete={(region) => setRegion(region)}
           >
-            <Marker
-              coordinate={skat0}
-              pinColor={colours.secondary}
-              onPress={(e) => console.log(e.nativeEvent)}
-            >
-              <Callout>
-                <Text>Hej</Text>
-              </Callout>
-            </Marker>
+            {markers.map((marker, index) => (
+              <Marker
+                key={index}
+                coordinate={marker.coordinate}
+                title={marker.title}
+              >
+                <Callout>
+                  <Text>{marker.title}</Text>
+                </Callout>
+              </Marker>
+            ))}
             <Polyline
               coordinates={routeCoordinates}
               strokeColor={colours.primary}
