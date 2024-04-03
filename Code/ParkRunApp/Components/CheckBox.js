@@ -1,7 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 const CheckBox = ({ text, modalHeaderText }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -32,69 +32,72 @@ const CheckBox = ({ text, modalHeaderText }) => {
         {/* Modal content */}
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-          <Text style ={styles.modalHeaderText}> {modalHeaderText}</Text>
+            <Text style={styles.modalHeaderText}> {modalHeaderText}</Text>
 
-              <View style={styles.photoBox}>
+            <View style={styles.photoBox}>
               <Text style={styles.modalText}>Här ska det vara en bild</Text>
+            </View>
 
-              </View>
+            <View style={styles.greyBox}>
+              <Text>
+                Här ska det vara instruktoioner i hur man sätter upp skiten
+              </Text>
+            </View>
 
-              <View style={styles.greyBox}>
-                  <Text>Här ska det vara instruktoioner i hur man sätter upp skiten</Text>
-              </View>
-        
             <TouchableOpacity
               style={styles.closeButtonContainer}
               onPress={toggleModal}
             >
-                <FontAwesomeIcon icon= {faXmark} size={28} color= {'black'}/>
+              <FontAwesomeIcon icon={faXmark} size={28} color={"black"} />
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
     </View>
-  ); 
+  );
 };
-
-
 
 const styles = StyleSheet.create({
   checkBox: {
     width: 355,
     height: 49,
-    backgroundColor: '#2B223D',
-    justifyContent: 'center',
+    backgroundColor: "#2B223D",
+    justifyContent: "center",
     borderRadius: 10,
     marginTop: 10,
-    position: 'relative', // Ensure the parent container uses relative positioning
+    position: "relative", // Ensure the parent container uses relative positioning
   },
   textContainer: {
     marginTop: 10,
     marginLeft: 30,
-    position: 'absolute', // Use absolute positioning for the text container
+    position: "absolute", // Use absolute positioning for the text container
   },
   text: {
-    color: '#EC9B02',
+    color: "#EC9B02",
   },
   buttonContainer: {
     borderRadius: 10,
-    overflow: 'hidden',
     width: 76,
-    height: 35,
-    right: 15, // Position the button container to the right edge of the parent container
-    top: 7, // Adjust top position as needed
-    position: 'absolute', // Use absolute positioning for the button container
+    height: 55,
+    right: 5,
+    position: "absolute",
+    justifyContent: "center", // Center the content horizontally
+    alignItems: "center", // Center the content vertically
   },
   openButton: {
-    backgroundColor: '#00CEAE',
-    padding: 10,
+    backgroundColor: "#00CEAE",
+    height: "70%",
+    width: "80%",
     borderRadius: 10,
+    textAlignVertical: "center", // Center the content vertically
+    textAlign: "center",
   },
+
   centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 22
+    marginTop: 22,
   },
   modalView: {
     margin: 20,
@@ -105,51 +108,49 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    width: '80%',
-    height: '60%'
-
+    width: "80%",
+    height: "60%",
   },
   modalText: {
     textAlign: "center",
-    fontSize: 12
+    fontSize: 12,
   },
   textStyle: {
     color: "white",
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
   },
   modalHeaderText: {
     fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'left',
-    right: 80
-    },
+    fontWeight: "bold",
+    textAlign: "left",
+    right: 80,
+  },
 
-  closeButtonContainer:{
-        position: 'absolute',
-        top: 10,
-        right: 10,
-
-    },
+  closeButtonContainer: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+  },
   photoBox: {
-    backgroundColor: '#D9D9D9',
+    backgroundColor: "#D9D9D9",
     width: 270, // Adjust the width as needed
     height: 180, // Adjust the height as needed
     marginBottom: 20, // Adjust the margin bottom as needed
     borderRadius: 10, // Adjust the border radius as needed
-    },
+  },
   greyBox: {
-    backgroundColor: '#D9D9D9',
+    backgroundColor: "#D9D9D9",
     width: 270, // Adjust the width as needed
     height: 140, // Adjust the height as needed
     marginBottom: 20, // Adjust the margin bottom as needed
     borderRadius: 10, // Adjust the border radius as needed
-    }
+  },
 });
 
 export default CheckBox;
