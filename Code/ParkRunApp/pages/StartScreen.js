@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -16,6 +16,10 @@ import ButtonStart from "../Components/ButtonStart";
 import SearchButtonStart from "../Components/searchButtonStart";
 import Logo from "../Design/parkrunAppLogo.png";
 
+//Database things
+import {collection, getDocs, query, select} from "firebase/firestore"
+import db from "../Firebase/firebase"
+
 export default function StartScreen({ navigation }) {
   const [Input, setInput] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -28,11 +32,42 @@ export default function StartScreen({ navigation }) {
 
   const valdPark = [selectedCountry, selectedCity, selectedParkrun];
 
-  const Countries = [
-    { label: "Sverige", value: "sverige" },
-    { label: "Scottland", value: "scottland" },
-    { label: "England", value: "england" },
-  ];
+  // const Countries = [
+  //   { label: "Sverige", value: "sverige" },
+  //   { label: "Scottland", value: "scottland" },
+  //   { label: "England", value: "england" },
+  // ];
+  
+  //---------
+  const [Countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const itemsCollection = collection(db, 'Parkruns');
+        const items = await getDocs(itemsCollection)
+        //const items = await getDocs(query(itemsCollection, select('country', 'city', 'name')));
+        console.log(items)
+        const countries = new Set();
+        const cities = new Set();
+
+        items.docs.forEach(doc => {
+          const country = doc.data().country;
+          if(country){
+            countries.add({label: country, value: country})
+          }
+        });
+        setCountries(Array.from(countries))
+        
+      } catch (error) {
+        console.error("Error fetching data: ", error)
+      }
+
+    };
+    fetchData();
+  }, []);
+  //---------
+
   const Cities = [
     { label: "Göteborg", value: "göteborg", key: "sverige" },
     { label: "Stockholm", value: "stockholm", key: "sverige" },

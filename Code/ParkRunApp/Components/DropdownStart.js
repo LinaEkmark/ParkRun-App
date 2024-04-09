@@ -7,6 +7,7 @@ const DropdownStart = ({ items, placeholder, initialValue, onValueChange }) => {
 
   const handleChange = (value) => {
     setSelectedValue(value);
+    console.log("valuet är  :" + value);
     onValueChange(value);
   };
   return (
