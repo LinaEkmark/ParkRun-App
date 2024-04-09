@@ -102,23 +102,6 @@ export default function MapScreen({ navigation, route }) {
           </MapView>
           <Text>lat: {region.latitude.toFixed(4)}</Text>
           <Text>long: {region.longitude.toFixed(4)}</Text>
-          {/* <View>overflow: "hidden", 
-            <CheckBox text="Check 1 - Ant hill" modalHeaderText="Myrstacken" />
-            <CheckBox
-              text="Check 2 - Old Tree"
-              modalHeaderText="Gamla trädet"
-            />
-            <CheckBox
-              text="Check 3 - Power Line"
-              modalHeaderText="Elledningen"
-            />
-            <CheckBox text="Check 4 - Sign" modalHeaderText="Skylten" />
-            <CheckBox text="Check 5 - Bush" modalHeaderText="Busken" />
-            <CheckBox
-              text="Check 6 - Large Rock"
-              modalHeaderText="Stora stenen"
-            />
-          </View> */}
           <View style={styles.checkBoxContainer}>{checkBoxes()}</View>
         </View>
       </View>
@@ -132,7 +115,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "white",
     alignItems: "center",
     justifyContent: "center",
   },
