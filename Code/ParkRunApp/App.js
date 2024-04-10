@@ -8,14 +8,12 @@ import eventScreen from "./pages/EventScreen";
 import startscreen from "./pages/StartScreen";
 */
 
-
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import runningScreen from "./pages/MapScreen";
-import eventScreen from "./pages/EventScreen";
+import mapScreen from "./pages/MapScreen";
 import startscreen from "./pages/StartScreen";
 
 const Stack = createNativeStackNavigator();
@@ -27,9 +25,9 @@ export default function App() {
         <Stack.Navigator
           initialRouteName="Start"
           screenOptions={{
-            headerStyle: { backgroundColor: '#2C233D' },
-            headerTintColor: '#EC9B02',
-            headerTitleStyle: { fontWeight: 'bold' }
+            headerStyle: { backgroundColor: "#2C233D" },
+            headerTintColor: "#EC9B02",
+            headerTitleStyle: { fontWeight: "bold" },
           }}
         >
           <Stack.Screen
@@ -37,8 +35,7 @@ export default function App() {
             component={startscreen}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="Running" component={runningScreen} />
-          <Stack.Screen name="Event Screen" component={eventScreen} />
+          <Stack.Screen name="Karta" component={mapScreen} />
         </Stack.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />
