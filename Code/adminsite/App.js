@@ -31,13 +31,25 @@ function loadDoc() {
 
 function test(xml) {
   let input = xml.responseXML;
-  let output;
+  let output = [];
   let point = input.getElementsByTagName("Point")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue;
   console.log(point);
   let coords = latLng(point);
   console.log("Lat = " + coords[0] + "\n" + "Lng = " + coords[1]);
   //let line = input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0];
   //console.log(line);
+  let i = 0;
+  while(input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[i]) {
+      let coords = latLng(input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[i].nodeValue);
+      output.push({
+          latitude: coords[0],
+          longitude: coords[1],
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+      });
+      i++;
+  }
+  console.log(output[0]);
 }
 
 
