@@ -10,11 +10,16 @@ import {
 } from "react-native";
 import CheckBox from "../Components/CheckBox";
 import MapView, { Marker, Callout, Polyline } from "react-native-maps";
+import KMLreader from "../Utils/KMLreader";
 
 import colours from "../config/colours";
 //import { CustomFonts } from './ParkRunFont'; // Behöver hjälp i hur jag ska importera egen font
 
 export default function MapScreen({ navigation, route }) {
+
+  let importedRegion = KMLreader();
+  console.log(importedRegion);
+
   const { selectedParkrun } = route.params;
 
   const [region, setRegion] = useState({
@@ -77,14 +82,12 @@ export default function MapScreen({ navigation, route }) {
               </Callout>
             </Marker>
             <Polyline
-              coordinates={[skat0, skat1, skat2, skat3]}
+              coordinates={[skat0,skat1,skat2,skat3]}
               strokeColor={colours.primary}
               strokeWidth={3}
               lineDashPattern={[5, 1]}
             />
           </MapView>
-          <Text>lat: {region.latitude.toFixed(4)}</Text>
-          <Text>long: {region.longitude.toFixed(4)}</Text>
           {/* <View>overflow: "hidden", 
             <CheckBox text="Check 1 - Ant hill" modalHeaderText="Myrstacken" />
             <CheckBox

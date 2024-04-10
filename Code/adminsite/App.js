@@ -1,3 +1,5 @@
+//TODO: Spara parsead output till fil (firebase?)
+
 import { Button, StyleSheet, Text, View } from 'react-native';
 //import colours from '../ParkRunApp/config/colours';
 
@@ -28,12 +30,20 @@ function loadDoc() {
 }
 
 function test(xml) {
-  //document.getElementById("tset").innerHTML=
-  //xml.responseXML.getElementsByTagName("name")[1].childNodes[0].nodeValue;
   let input = xml.responseXML;
   let output;
   let point = input.getElementsByTagName("Point")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue;
   console.log(point);
+  let coords = latLng(point);
+  console.log("Lat = " + coords[0] + "\n" + "Lng = " + coords[1]);
+  //let line = input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0];
+  //console.log(line);
 }
 
-  //TODO: Dela upp lat- och lng-koordinater
+
+function latLng(coords) {
+  const cArray = coords.split(",");
+  //Koordinater sparas som longitud sen latitud i kml. Det fixas nedan:
+  const reversedArray = [cArray[1], cArray[0]];
+  return reversedArray;
+}
