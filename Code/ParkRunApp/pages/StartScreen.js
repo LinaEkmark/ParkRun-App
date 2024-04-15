@@ -16,6 +16,7 @@ import DropdownStart from "../Components/DropdownStart";
 import ButtonStart from "../Components/ButtonStart";
 import SearchButtonStart from "../Components/searchButtonStart";
 import Logo from "../Design/parkrunAppLogo.png";
+import { Dropdown } from 'react-native-element-dropdown';
 
 // //Database things
 import {collection, getDocs, query, where} from "firebase/firestore"
@@ -39,7 +40,7 @@ export default function StartScreen({ navigation }) {
   //   { label: "Scottland", value: "scottland" },
   //   { label: "England", value: "england" },
   // ];
-  
+
   //---------
   const [Countries, setCountries] = useState([]);
   const [Cities, setCities] = useState([]);
@@ -78,6 +79,9 @@ export default function StartScreen({ navigation }) {
         setCountries(countries);
         setCities(cities);
         setParkruns(parkruns);
+
+        setCityList(cities);
+        setParkrunList(parkruns);
         
       } catch (error) {
         console.error("Error fetching data: ", error)
@@ -103,6 +107,22 @@ export default function StartScreen({ navigation }) {
   //   { label: "Edinburg", value: "edinburg", key: "edinburg" },
   //   { label: "Stoke", value: "stoke", key: "stoke" },
   // ];
+
+
+
+  //const [value, setValue] = useState(null);
+  const [isCountryFocus, setIsCountryFocus] = useState(false);
+  const [isCityFocus, setIsCityFocus] = useState(false);
+  const [isParkrunFocus, setIsParkrunFocus] = useState(false);
+
+
+  const [cityList, setCityList] = useState([]);
+  const [parkrunList, setParkrunList] = useState([]);
+
+
+
+
+
 
   const filterParkruns = (text) => {
     const filteredParkruns = Parkruns.filter((parkrun) =>
@@ -162,6 +182,9 @@ export default function StartScreen({ navigation }) {
     }
   }
 
+
+
+
   return (
     <View style={styles.container}>
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
@@ -211,15 +234,106 @@ export default function StartScreen({ navigation }) {
           <Text style={styles.text2}>Eller välj:</Text>
           <View style={styles.dropdownsections}>
             {/* <Image source={require(sweFlag)} style={styles.dropdownlistimage} /> */}
-            <DropdownStart
+
+
+            {/*<DropdownStart
               items={Countries}
               placeholder="Välj Land"
               initialValue={selectedCountry}
               onValueChange={setSelectedCountry}
+            />*/}
+
+            <Dropdown
+                style={[styles.dropdown, isCountryFocus && { borderColor: 'blue' }]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                //iconStyle={styles.iconStyle}
+                data={Countries}
+                search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder={!isCountryFocus ? 'Select country' : '...'}
+                searchPlaceholder="Search..."
+                //value={value}
+                value={selectedCountry}
+                onFocus={() => setIsCountryFocus(true)}
+                onBlur={() => setIsCountryFocus(false)}
+                onChange={item => {
+                  //setSelectedCountry(item.value)
+                  setSelectedCountry(item.value)
+                  setSelectedCity("")
+                  setSelectedParkrun("")
+                  setCityList(getCities(item.value))
+
+                }}
+
             />
+
+
+
+
+            <Dropdown
+                style={[styles.dropdown, isCityFocus && { borderColor: 'blue' }]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                //iconStyle={styles.iconStyle}
+                data={cityList}
+                search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder={!isCityFocus ? 'Select city' : '...'}
+                searchPlaceholder="Search..."
+                //value={value}
+                value={selectedCity}
+                onFocus={() => setIsCityFocus(true)}
+                onBlur={() => setIsCityFocus(false)}
+                onChange={item => {
+                  //setSelectedCountry(item.value)
+                  setSelectedCity(item.value)
+                  setSelectedParkrun("")
+                  setParkrunList(getParkruns(item.value))
+                }}
+
+            />
+
+
+
+
+
+
+            <Dropdown
+                style={[styles.dropdown, isParkrunFocus && { borderColor: 'blue' }]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                //iconStyle={styles.iconStyle}
+                data={parkrunList}
+                search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder={!isParkrunFocus ? 'Select parkrun' : '...'}
+                searchPlaceholder="Search..."
+                //value={value}
+                value={selectedParkrun}
+                onFocus={() => setIsParkrunFocus(true)}
+                onBlur={() => setIsParkrunFocus(false)}
+                onChange={item => {
+                  //setSelectedCountry(item.value)
+                  setSelectedParkrun(item.value)
+
+                }}
+
+            />
+
           </View>
-          <View style={styles.dropdownsections}>
-            {/*<Image source={require(sweFlag)} style={styles.dropdownlistimage} /> */}
+
+         {/* <View style={styles.dropdownsections}>
+
             <DropdownStart
               items={getCities(selectedCountry)}
               placeholder="Välj Stad"
@@ -228,14 +342,15 @@ export default function StartScreen({ navigation }) {
             />
           </View>
           <View style={[styles.dropdownsections, { marginBottom: "8%" }]}>
-            {/* <Image source={require(sweFlag)} style={styles.dropdownlistimage} /> */}
+
             <DropdownStart
               items={getParkruns(selectedCity)}
               placeholder="Välj Parkrun"
               initialValue={selectedParkrun}
               onValueChange={setSelectedParkrun}
             />
-          </View>
+          </View>*/}
+
           <View>
             <ButtonStart
               onPress={() =>
@@ -256,7 +371,23 @@ export default function StartScreen({ navigation }) {
 }
 
 
+
+
+
+
 const screenWidth = Dimensions.get('window').width;
+
+
+
+
+
+
+
+
+
+
+
+
 
 const styles = StyleSheet.create({
   scrollViewContainer: {
@@ -287,7 +418,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontWeight: "bold",
     fontSize: 15,
-    marginTop: "5%",
+    marginTop: "10%",
   },
   main: {
     width: "100%",
@@ -324,9 +455,10 @@ const styles = StyleSheet.create({
     //overflow: "hidden",
   },
   dropdownsections: {
-    alginSelf: "center",
+    alignSelf: "center",
     width: "60%",
-    marginTop: "5%",
+    marginTop: "1%",
+    marginBottom: "5%",
   },
   dropdownlistimage: {
     width: "15%",
@@ -370,4 +502,83 @@ const styles = StyleSheet.create({
     letterSpacing: 0.25,
     color: "#2B233D",
   },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /*container: {
+    backgroundColor: 'white',
+    padding: 16,
+  },*/
+  dropdown: {
+    marginTop: "5%",
+    height: 50,
+    //borderColor: 'gray',
+    //textAlign: "center",
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 8,
+    borderColor: "#FFA300",
+
+
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#CCCCCC",
+
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#FFA300"
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+  inputIOS: {
+    marginTop: "5%",
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    textAlign: "center",
+    borderWidth: 1,
+    borderColor: "#FFA300",
+    borderRadius: 6,
+    color: "#FFA330", // to ensure the text is never behind the icon
+  },
+
+
+
 });
