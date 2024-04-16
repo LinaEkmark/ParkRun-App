@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Text,
   View,
@@ -14,8 +14,42 @@ import MapView, { Marker, Callout, Polyline } from "react-native-maps";
 import colours from "../config/colours";
 //import { CustomFonts } from './ParkRunFont'; // Behöver hjälp i hur jag ska importera egen font
 
+
+//Database things
+import {collection, getDocs, query, where} from "firebase/firestore"
+import db from "../Firebase/firebase"
+
 export default function MapScreen({ navigation, route }) {
+  //load the parkrun from the previous screen
   const { selectedParkrun } = route.params;
+
+  //empty array to store the text for the checkboxes
+  const [checkBoxText, setCheckBoxText] = useState([]);
+
+  //data fetch from correct parkrun document
+  useEffect(() => {
+    const fetchData = async () => {
+      const q = query(collection(db, "Parkruns/parkruns-info/" + selectedParkrun));
+      const querySnapshot = await getDocs(q);
+      let checkBoxText = [];
+  
+      querySnapshot.forEach((doc) => {
+        const checkBoxData = doc.data().checkBoxText;
+        // Get the keys and sort them
+        const sortedKeys = Object.keys(checkBoxData).sort();
+        // Iterate over the sorted keys and push each key's value into the checkBoxText array
+        sortedKeys.forEach((key) => {
+          checkBoxText.push(checkBoxData[key]);
+        });
+      });
+  
+      console.log(checkBoxText);
+      setCheckBoxText(checkBoxText);
+    };
+  
+    fetchData();
+  }, []);
+
 
   const [region, setRegion] = useState({
     latitude: 57.7075,
@@ -39,14 +73,14 @@ export default function MapScreen({ navigation, route }) {
     },
   };
 
-  const checkBoxText = [
-    ["Check 1 - Ant hill", "Myrstacken"],
-    ["Check 2 - Old Tree", "Gamla trädet"],
-    ["Check 3 - Power Line", "Elledningen"],
-    ["Check 4 - Sign", "Skylten"],
-    ["Check 5 - Bush", "Busken"],
-    ["Check 6 - Large Rock", "Stora stenen"],
-  ];
+  // const checkBoxText = [
+  //   ["Check 1 - Ant hill", "Myrstacken"],
+  //   ["Check 2 - Old Tree", "Gamla trädet"],
+  //   ["Check 3 - Power Line", "Elledningen"],
+  //   ["Check 4 - Sign", "Skylten"],
+  //   ["Check 5 - Bush", "Busken"],
+  //   ["Check 6 - Large Rock", "Stora stenen"],
+  // ];
 
   function checkBoxes() {
     return checkBoxText.map((text, index) => (

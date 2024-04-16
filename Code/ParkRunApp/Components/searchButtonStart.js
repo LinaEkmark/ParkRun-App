@@ -8,10 +8,10 @@ const SearchButtonStart = ({ onPress, style }) => {
       <Image
         source={searchLogo}
         style={{
-          resizeMode: "contain",
+          resizeMode: "center",
           transform: [{ rotate: "90deg" }],
           maxWidth: "70%",
-          maxHeight: "97%",
+          maxHeight: "99%",
         }}
       />
     </TouchableOpacity>

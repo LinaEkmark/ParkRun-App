@@ -134,6 +134,7 @@ export default function StartScreen({ navigation }) {
     setopenFlatList(true);
   };
 
+  //go to map page
   const handleSubmit = () => {
     console.log(selectedParkrun);
     navigation.navigate("Karta", {
