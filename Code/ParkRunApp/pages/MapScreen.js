@@ -45,7 +45,12 @@ export default function MapScreen({ navigation, route }) {
       querySnapshot.forEach((doc) => {
         const checkBoxData = doc.data().checkBoxText;
         const location = doc.data().location; // Corrected variable name
+        const KMLfile = doc.data().KMLfile;
+
+
         console.log("1: " + location.latitude + " " + location.longitude);
+        console.log(KMLfile);
+
         // Set the regionPosition as an object directly
         regionPosition = {
           latitude: location.latitude,
@@ -195,3 +200,35 @@ const skat3 = {
   latitudeDelta: 0.01,
   longitudeDelta: 0.01,
 };
+
+
+function KMLparse(file) {
+  let input = file;
+  let output = [];
+  let point = input.getElementsByTagName("Point")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue;
+  console.log(point);
+  let coords = latLng(point);
+  console.log("Lat = " + coords[0] + "\n" + "Lng = " + coords[1]);
+  //let line = input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0];
+  //console.log(line);
+  let i = 0;
+  while(input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[i]) {
+    let coords = latLng(input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[i].nodeValue);
+    output.push({
+      latitude: coords[0],
+      longitude: coords[1],
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01,
+    });
+    i++;
+  }
+  console.log(output[0]);
+}
+
+
+function latLng(coords) {
+  const cArray = coords.split(",");
+  //Koordinater sparas som longitud sen latitud i kml. Det fixas nedan:
+  const reversedArray = [cArray[1], cArray[0]];
+  return reversedArray;
+}
