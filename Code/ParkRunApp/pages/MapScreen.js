@@ -18,6 +18,7 @@ import colours from "../config/colours";
 //Database things
 import {collection, getDocs, query, where} from "firebase/firestore"
 import db from "../Firebase/firebase"
+import { set } from "firebase/database";
 
 export default function MapScreen({ navigation, route }) {
   //load the parkrun from the previous screen
@@ -25,17 +26,33 @@ export default function MapScreen({ navigation, route }) {
 
   //empty array to store the text for the checkboxes
   const [checkBoxText, setCheckBoxText] = useState([]);
+  const [region, setRegion] = useState(null);
+  const latDelta = 0.007;
+  const longDelta = 0.007;
+
+  //loading state
+  const [isLoading, setIsLoading] = useState(true);
 
   //data fetch from correct parkrun document
   useEffect(() => {
     const fetchData = async () => {
+      try{
       const q = query(collection(db, "Parkruns/parkruns-info/" + selectedParkrun));
       const querySnapshot = await getDocs(q);
       let checkBoxText = [];
+      let regionPosition = {}; // Corrected to an object
   
       querySnapshot.forEach((doc) => {
         const checkBoxData = doc.data().checkBoxText;
-        // Get the keys and sort them
+        const location = doc.data().location; // Corrected variable name
+        console.log("1: " + location.latitude + " " + location.longitude);
+        // Set the regionPosition as an object directly
+        regionPosition = {
+          latitude: location.latitude,
+          longitude: location.longitude
+        };
+  
+        // Sort the keys of the checkBoxData object
         const sortedKeys = Object.keys(checkBoxData).sort();
         // Iterate over the sorted keys and push each key's value into the checkBoxText array
         sortedKeys.forEach((key) => {
@@ -43,53 +60,45 @@ export default function MapScreen({ navigation, route }) {
         });
       });
   
-      console.log(checkBoxText);
-      setCheckBoxText(checkBoxText);
-    };
+      console.log("2: ", regionPosition);
   
+      console.log("3: ", checkBoxText);
+      setCheckBoxText(checkBoxText);
+      setRegion({
+        latitude: regionPosition.latitude,
+        longitude: regionPosition.longitude,
+        latitudeDelta: latDelta,
+        longitudeDelta: longDelta,
+      });
+      console.log("4: ", region); // Log the region state after it has been updated
+    } catch (e) {
+      console.error("Error fetching data: ", e);
+    } finally {
+      setIsLoading(false);
+      console.log("Data fetched successfully");
+    }
+    };
     fetchData();
   }, []);
 
-
-  const [region, setRegion] = useState({
-    latitude: 57.7075,
-    longitude: 11.9675,
-    latitudeDelta: 0.1,
-    longitudeDelta: 0.1,
-  });
-
-  const regionPositions = {
-    skatås: {
-      latitude: 57.7054,
-      longitude: 12.0406,
-      latitudeDelta: 0.007,
-      longitudeDelta: 0.007,
-    },
-    billdal: {
-      latitude: 58.7054,
-      longitude: 12.0406,
-      latitudeDelta: 0.007,
-      longitudeDelta: 0.007,
-    },
-  };
-
-  // const checkBoxText = [
-  //   ["Check 1 - Ant hill", "Myrstacken"],
-  //   ["Check 2 - Old Tree", "Gamla trädet"],
-  //   ["Check 3 - Power Line", "Elledningen"],
-  //   ["Check 4 - Sign", "Skylten"],
-  //   ["Check 5 - Bush", "Busken"],
-  //   ["Check 6 - Large Rock", "Stora stenen"],
-  // ];
-
   function checkBoxes() {
     return checkBoxText.map((text, index) => (
-      <CheckBox key={index} text={text[0]} modalHeaderText={text[1]} />
+      <CheckBox key={index} 
+                text={text[0]} 
+                modalHeaderText={text[1]} />
     ));
   }
 
-  function getRegionPosition(parkrun) {
-    return regionPositions[parkrun];
+  function getRegionPositions() {
+    return region;
+  }
+
+  if (isLoading && region === null) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#2C233D", }}>
+        <Text style={{color: "#FFA330",}}>Loading...</Text>
+      </View>
+    );
   }
 
   return (
@@ -98,7 +107,7 @@ export default function MapScreen({ navigation, route }) {
         <View style={styles.container}>
           <MapView
             style={styles.MapBox}
-            initialRegion={getRegionPosition(selectedParkrun)}
+            initialRegion={region}
             onRegionChangeComplete={(region) => setRegion(region)}
           >
             <Marker
@@ -117,8 +126,8 @@ export default function MapScreen({ navigation, route }) {
               lineDashPattern={[5, 1]}
             />
           </MapView>
-          <Text>lat: {region.latitude.toFixed(4)}</Text>
-          <Text>long: {region.longitude.toFixed(4)}</Text>
+          <Text>lat: {region.latitude}</Text>
+          <Text>long: {region.longitude}</Text>
           {/* <View>overflow: "hidden", 
             <CheckBox text="Check 1 - Ant hill" modalHeaderText="Myrstacken" />
             <CheckBox

@@ -32,28 +32,28 @@ const CheckBox = ({ text, modalHeaderText }) => {
         {/* Modal content */}
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-          <Text style ={styles.modalHeaderText}> {modalHeaderText}</Text>
+            <Text style={styles.modalHeaderText}> {modalHeaderText}</Text>
 
-              <View style={styles.photoBox}>
+            <View style={styles.photoBox}>
               <Text style={styles.modalText}>Här ska det vara en bild</Text>
 
-              </View>
+            </View>
 
-              <View style={styles.greyBox}>
-                  <Text>Här ska det vara instruktoioner i hur man sätter upp skiten</Text>
-              </View>
-        
+            <View style={styles.greyBox}>
+              <Text>Här ska det vara instruktoioner i hur man sätter upp skiten</Text>
+            </View>
+
             <TouchableOpacity
               style={styles.closeButtonContainer}
               onPress={toggleModal}
             >
-                <FontAwesomeIcon icon= {faXmark} size={28} color= {'black'}/>
+              <FontAwesomeIcon icon={faXmark} size={28} color={'black'} />
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
     </View>
-  ); 
+  );
 };
 
 
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 30,
     position: 'absolute', // Use absolute positioning for the text container
+
   },
   text: {
     color: '#EC9B02',
@@ -89,6 +90,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#00CEAE',
     padding: 10,
     borderRadius: 10,
+    textAlign: 'center',
+    textAlignVertical: 'center',
   },
   centeredView: {
     flex: 1,
@@ -128,28 +131,28 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'left',
     right: 80
-    },
+  },
 
-  closeButtonContainer:{
-        position: 'absolute',
-        top: 10,
-        right: 10,
+  closeButtonContainer: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
 
-    },
+  },
   photoBox: {
     backgroundColor: '#D9D9D9',
     width: 270, // Adjust the width as needed
     height: 180, // Adjust the height as needed
     marginBottom: 20, // Adjust the margin bottom as needed
     borderRadius: 10, // Adjust the border radius as needed
-    },
+  },
   greyBox: {
     backgroundColor: '#D9D9D9',
     width: 270, // Adjust the width as needed
     height: 140, // Adjust the height as needed
     marginBottom: 20, // Adjust the margin bottom as needed
     borderRadius: 10, // Adjust the border radius as needed
-    }
+  }
 });
 
 export default CheckBox;
