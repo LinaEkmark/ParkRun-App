@@ -41,7 +41,11 @@ async function test(xml) {
   //console.log("Lat = " + coords[0] + "\n" + "Lng = " + coords[1]);
   //let line = input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0];
   //console.log(line);
+
+  // Koordinater är en 
   let coords = input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue.split("\n");
+  coords = coords.filter(function(entry) {return /\S/.test(entry);});
+  console.log(coords);
   let i = 0;
   while(coords[i]) {
       let coordser = latLng(coords[i]);
@@ -62,9 +66,10 @@ async function test(xml) {
   else {
     console.log("Den jäveln finns inte");
   }
-  /*await setDoc (doc(db, "Parkruns", "parkruns-info", "Holyrood parkrun", "test-insert-geodata"), {
+  await setDoc (doc(db, "Parkruns", "parkruns-info", "Holyrood parkrun", "test-insert-geodata"), {
     track: output 
-  });*/
+
+  });
 }
 
 
