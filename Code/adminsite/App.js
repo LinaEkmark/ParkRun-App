@@ -25,14 +25,14 @@ function loadDoc() {
   xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && 
       this.status == 200) {
-        test(this);
+        parse(this);
       }
   };
   xmlhttp.open("GET", "Skatås Parkrun.kml", true);
   xmlhttp.send();
 }
 
-async function test(xml) {
+async function parse(xml) {
   let input = xml.responseXML;
   let output = [];
   //let point = input.getElementsByTagName("Point")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue;
@@ -52,8 +52,6 @@ async function test(xml) {
       output.push({
           latitude: coordser[0],
           longitude: coordser[1],
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
       });
       
       console.log(output[i]);
