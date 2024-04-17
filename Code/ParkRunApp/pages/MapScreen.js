@@ -18,7 +18,7 @@ import colours from "../config/colours";
 //Database things
 import {collection, getDocs, query, where} from "firebase/firestore"
 import db from "../Firebase/firebase"
-import { set } from "firebase/database";
+
 
 export default function MapScreen({ navigation, route }) {
   //load the parkrun from the previous screen
@@ -36,50 +36,52 @@ export default function MapScreen({ navigation, route }) {
   //data fetch from correct parkrun document
   useEffect(() => {
     const fetchData = async () => {
-      try{
-      const q = query(collection(db, "Parkruns/parkruns-info/" + selectedParkrun));
-      const querySnapshot = await getDocs(q);
-      let checkBoxText = [];
-      let regionPosition = {}; // Corrected to an object
-  
-      querySnapshot.forEach((doc) => {
-        const checkBoxData = doc.data().checkBoxText;
-        const location = doc.data().location; // Corrected variable name
-        console.log("1: " + location.latitude + " " + location.longitude);
-        // Set the regionPosition as an object directly
-        regionPosition = {
-          latitude: location.latitude,
-          longitude: location.longitude
-        };
-  
-        // Sort the keys of the checkBoxData object
-        const sortedKeys = Object.keys(checkBoxData).sort();
-        // Iterate over the sorted keys and push each key's value into the checkBoxText array
-        sortedKeys.forEach((key) => {
-          checkBoxText.push(checkBoxData[key]);
+      try {
+        const q = query(collection(db, "Parkruns/parkruns-info/" + selectedParkrun));
+        const querySnapshot = await getDocs(q);
+        let checkBoxText = [];
+        let regionPosition = {};
+
+        querySnapshot.forEach(async (doc) => {
+          const checkBoxData = doc.data().checkBoxText;
+          const location = doc.data().location;
+          console.log("1: " + location.latitude + " " + location.longitude);
+
+          // Set the regionPosition as an object directly
+          regionPosition = {
+            latitude: location.latitude,
+            longitude: location.longitude
+          };
+
+          // Sort the keys of the checkBoxData object
+          const sortedKeys = Object.keys(checkBoxData).sort();
+          // Iterate over the sorted keys and push each key's value into the checkBoxText array
+          sortedKeys.forEach((key) => {
+            checkBoxText.push(checkBoxData[key]);
+          });
         });
-      });
-  
-      console.log("2: ", regionPosition);
-  
-      console.log("3: ", checkBoxText);
-      setCheckBoxText(checkBoxText);
-      setRegion({
-        latitude: regionPosition.latitude,
-        longitude: regionPosition.longitude,
-        latitudeDelta: latDelta,
-        longitudeDelta: longDelta,
-      });
-      console.log("4: ", region); // Log the region state after it has been updated
-    } catch (e) {
-      console.error("Error fetching data: ", e);
-    } finally {
-      setIsLoading(false);
-      console.log("Data fetched successfully");
-    }
+
+        console.log("2: ", regionPosition);
+
+        console.log("3: ", checkBoxText);
+        setCheckBoxText(checkBoxText);
+        setRegion({
+          latitude: regionPosition.latitude,
+          longitude: regionPosition.longitude,
+          latitudeDelta: latDelta,
+          longitudeDelta: longDelta,
+        });
+        console.log("4: ", region); // Log the region state after it has been updated
+      } catch (e) {
+        console.error("Error fetching data: ", e);
+      } finally {
+        setIsLoading(false);
+        console.log("Data fetched successfully");
+      }
     };
     fetchData();
   }, []);
+
 
   function checkBoxes() {
     return checkBoxText.map((text, index) => (
@@ -87,10 +89,6 @@ export default function MapScreen({ navigation, route }) {
                 text={text[0]} 
                 modalHeaderText={text[1]} />
     ));
-  }
-
-  function getRegionPositions() {
-    return region;
   }
 
   if (isLoading && region === null) {
