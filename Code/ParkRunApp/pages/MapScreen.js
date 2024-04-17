@@ -12,6 +12,8 @@ import CheckBox from "../Components/CheckBox";
 import MapView, { Marker, Callout, Polyline } from "react-native-maps";
 
 import colours from "../config/colours";
+
+import { parseString } from 'react-native-xml2js';
 //import { CustomFonts } from './ParkRunFont'; // Behöver hjälp i hur jag ska importera egen font
 
 
@@ -27,6 +29,7 @@ export default function MapScreen({ navigation, route }) {
   //empty array to store the text for the checkboxes
   const [checkBoxText, setCheckBoxText] = useState([]);
   const [region, setRegion] = useState(null);
+  const [KMLfile, setKMLfile] = useState(null);
   const latDelta = 0.007;
   const longDelta = 0.007;
 
@@ -41,15 +44,15 @@ export default function MapScreen({ navigation, route }) {
       const querySnapshot = await getDocs(q);
       let checkBoxText = [];
       let regionPosition = {}; // Corrected to an object
-  
+      let kml = '';
+
       querySnapshot.forEach((doc) => {
         const checkBoxData = doc.data().checkBoxText;
         const location = doc.data().location; // Corrected variable name
-        const KMLfile = doc.data().KMLfile;
+        kml = doc.data().KMLfile;
 
 
         console.log("1: " + location.latitude + " " + location.longitude);
-        console.log(KMLfile);
 
         // Set the regionPosition as an object directly
         regionPosition = {
@@ -76,6 +79,9 @@ export default function MapScreen({ navigation, route }) {
         longitudeDelta: longDelta,
       });
       console.log("4: ", region); // Log the region state after it has been updated
+      setKMLfile(kml);
+      console.log("5: ", KMLfile);
+
     } catch (e) {
       console.error("Error fetching data: ", e);
     } finally {
@@ -84,7 +90,21 @@ export default function MapScreen({ navigation, route }) {
     }
     };
     fetchData();
+
   }, []);
+
+  //console.log(KMLfile)
+  // Parse KML to XML
+  parseKMLtoXML(KMLfile)
+      .then(xmlData => {
+        console.log('Parsed XML data: ', xmlData);
+        // Use the parsed XML data as needed
+      })
+      .catch(error => {
+        console.error('Error parsing KML to XML: ', error);
+      });
+
+  console.log(KMLparse())
 
   function checkBoxes() {
     return checkBoxText.map((text, index) => (
@@ -201,28 +221,41 @@ const skat3 = {
   longitudeDelta: 0.01,
 };
 
-
-function KMLparse(file) {
-  let input = file;
-  let output = [];
-  let point = input.getElementsByTagName("Point")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue;
-  console.log(point);
-  let coords = latLng(point);
-  console.log("Lat = " + coords[0] + "\n" + "Lng = " + coords[1]);
-  //let line = input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0];
-  //console.log(line);
-  let i = 0;
-  while(input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[i]) {
-    let coords = latLng(input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[i].nodeValue);
-    output.push({
-      latitude: coords[0],
-      longitude: coords[1],
-      latitudeDelta: 0.01,
-      longitudeDelta: 0.01,
+// Function to parse KML to XML
+const parseKMLtoXML = (kmlString) => {
+  return new Promise((resolve, reject) => {
+    parseString(kmlString, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
     });
-    i++;
-  }
-  console.log(output[0]);
+  });
+};
+
+
+function KMLparse(data) {
+    let input = data;
+    let output = [];
+    let point = input.getElementsByTagName("Point")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue;
+    console.log(point);
+    let coords = latLng(point);
+    console.log("Lat = " + coords[0] + "\n" + "Lng = " + coords[1]);
+    //let line = input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0];
+    //console.log(line);
+    let i = 0;
+    while (input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[i]) {
+      let coords = latLng(input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[i].nodeValue);
+      output.push({
+        latitude: coords[0],
+        longitude: coords[1],
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      });
+      i++;
+    }
+    console.log(output[0]);
 }
 
 
