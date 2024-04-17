@@ -50,8 +50,8 @@ async function parse(xml) {
   while(coords[i]) {
       let coordser = latLng(coords[i]);
       output.push({
-          latitude: coordser[0],
-          longitude: coordser[1],
+          latitude: parseFloat(coordser[0]),
+          longitude: parseFloat(coordser[1]),
       });
       
       console.log(output[i]);

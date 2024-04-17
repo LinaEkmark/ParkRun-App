@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import CheckBox from "../Components/CheckBox";
 import MapView, { Marker, Callout, Polyline } from "react-native-maps";
-import KMLreader from "../Utils/KMLreader";
+//import KMLreader from "../Utils/KMLreader";
 
 import colours from "../config/colours";
 //import { CustomFonts } from './ParkRunFont'; // Behöver hjälp i hur jag ska importera egen font
@@ -31,6 +31,11 @@ export default function MapScreen({ navigation, route }) {
   const latDelta = 0.007;
   const longDelta = 0.007;
 
+  const reee = [{latitude: 57.7035863, longitude: 12.0378259}, 
+    {latitude: 57.7036843, longitude: 12.0380968}];
+  
+  const [track, setTrack] = useState([reee]);
+    
   //loading state
   const [isLoading, setIsLoading] = useState(true);
 
@@ -42,6 +47,27 @@ export default function MapScreen({ navigation, route }) {
         const querySnapshot = await getDocs(q);
         let checkBoxText = [];
         let regionPosition = {};
+        let importedTrack = [];
+
+        const w = query(collection(db, "Parkruns", "parkruns-info", "Holyrood parkrun")); 
+          const querySnapshot2 = await getDocs(w);
+          querySnapshot2.forEach(async (doc) => {
+          importedTrack.push(doc.data().track);
+
+          //console.log("track: ", importedTrack);
+        });
+        console.log("Track element: ", importedTrack[0][0].longitude);
+        /* let i = 0;
+        while(importedTrack[0][i]) {
+          track.push({
+            latitude: importedTrack[0][i].latitude,
+            longitude: importedTrack[0][i].longitude
+          });
+          i++;
+        } */
+        setTrack(importedTrack[0]);
+        console.log("track :", track);
+        //console.log("point: ", skat0);
 
         querySnapshot.forEach(async (doc) => {
           const checkBoxData = doc.data().checkBoxText;
@@ -82,7 +108,8 @@ export default function MapScreen({ navigation, route }) {
     };
     fetchData();
   }, []);
-
+  console.log("AAAA ", track);
+  
 
   function checkBoxes() {
     return checkBoxText.map((text, index) => (
@@ -119,7 +146,7 @@ export default function MapScreen({ navigation, route }) {
               </Callout>
             </Marker>
             <Polyline
-              coordinates={[skat0,skat1,skat2,skat3]}
+              coordinates={track}
               strokeColor={colours.primary}
               strokeWidth={3}
               lineDashPattern={[5, 1]}
