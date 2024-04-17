@@ -3,6 +3,9 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
 //import colours from '../ParkRunApp/config/colours';
 
+import {doc, setDoc} from 'firebase/firestore';
+import db from './Firebase/firebase';
+
 export default function Page() {
   return(
     <><View>
@@ -29,27 +32,39 @@ function loadDoc() {
   xmlhttp.send();
 }
 
-function test(xml) {
+async function test(xml) {
   let input = xml.responseXML;
   let output = [];
-  let point = input.getElementsByTagName("Point")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue;
-  console.log(point);
-  let coords = latLng(point);
-  console.log("Lat = " + coords[0] + "\n" + "Lng = " + coords[1]);
+  //let point = input.getElementsByTagName("Point")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue;
+  //console.log(point);
+  //let coords = latLng(point);
+  //console.log("Lat = " + coords[0] + "\n" + "Lng = " + coords[1]);
   //let line = input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0];
   //console.log(line);
+  let coords = input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue.split("\n");
   let i = 0;
-  while(input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[i]) {
-      let coords = latLng(input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[i].nodeValue);
+  while(coords[i]) {
+      let coordser = latLng(coords[i]);
       output.push({
-          latitude: coords[0],
-          longitude: coords[1],
+          latitude: coordser[0],
+          longitude: coordser[1],
           latitudeDelta: 0.01,
           longitudeDelta: 0.01,
       });
+      
+      console.log(output[i]);
       i++;
   }
-  console.log(output[0]);
+  if (input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue) {
+    console.log("Den jäveln finns");
+    console.log("Den jäveln är " + input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue);
+  }
+  else {
+    console.log("Den jäveln finns inte");
+  }
+  /*await setDoc (doc(db, "Parkruns", "parkruns-info", "Holyrood parkrun", "test-insert-geodata"), {
+    track: output 
+  });*/
 }
 
 
