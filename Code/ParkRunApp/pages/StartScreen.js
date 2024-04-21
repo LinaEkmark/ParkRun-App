@@ -13,6 +13,7 @@ import {
   Dimensions
 } from "react-native";
 import DropdownStart from "../Components/DropdownStart";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import ButtonStart from "../Components/ButtonStart";
 import SearchButtonStart from "../Components/searchButtonStart";
 import Logo from "../Design/parkrunAppLogo.png";
@@ -186,8 +187,25 @@ export default function StartScreen({ navigation }) {
 
 
   return (
-    <View style={styles.container}>
-    <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+    //<View style={styles.container}>
+      <KeyboardAwareScrollView
+          style={styles.scrollViewContainer}
+
+
+
+          resetScrollToCoords={{ x: 0, y: 0 }}
+          extraScrollHeight={30}
+          //extraHeight={150}
+
+
+          enableOnAndroid={false}
+
+
+          contentContainerStyle={styles.keyboardawarecontainer}
+
+          scrollEnabled={false}
+      >
+
       <Image source={Logo} style={styles.image} />
         <Text style={styles.text}>Välkommen till parkruns</Text>
         <Text style={styles.text}>volontärdatabas!</Text>
@@ -248,10 +266,11 @@ export default function StartScreen({ navigation }) {
                 placeholderStyle={styles.placeholderStyle}
                 selectedTextStyle={styles.selectedTextStyle}
                 inputSearchStyle={styles.inputSearchStyle}
+                containerStyle={styles.dropdowncontent}
                 //iconStyle={styles.iconStyle}
                 data={Countries}
                 search
-                maxHeight={300}
+                //maxHeight={160}
                 labelField="label"
                 valueField="value"
                 placeholder={!isCountryFocus ? 'Select country' : '...'}
@@ -279,10 +298,12 @@ export default function StartScreen({ navigation }) {
                 placeholderStyle={styles.placeholderStyle}
                 selectedTextStyle={styles.selectedTextStyle}
                 inputSearchStyle={styles.inputSearchStyle}
+                containerStyle={styles.dropdowncontent}
+
                 //iconStyle={styles.iconStyle}
                 data={cityList}
                 search
-                maxHeight={300}
+                //maxHeight={160}
                 labelField="label"
                 valueField="value"
                 placeholder={!isCityFocus ? 'Select city' : '...'}
@@ -310,10 +331,11 @@ export default function StartScreen({ navigation }) {
                 placeholderStyle={styles.placeholderStyle}
                 selectedTextStyle={styles.selectedTextStyle}
                 inputSearchStyle={styles.inputSearchStyle}
+                containerStyle={styles.dropdowncontent}
                 //iconStyle={styles.iconStyle}
                 data={parkrunList}
                 search
-                maxHeight={300}
+                //maxHeight={160}
                 labelField="label"
                 valueField="value"
                 placeholder={!isParkrunFocus ? 'Select parkrun' : '...'}
@@ -364,8 +386,8 @@ export default function StartScreen({ navigation }) {
             ></ButtonStart>
           </View>
         </View>
-        </ScrollView>
-      </View>
+      </KeyboardAwareScrollView>
+      //</View>
     
   );
 }
@@ -393,15 +415,32 @@ const styles = StyleSheet.create({
   scrollViewContainer: {
     flexGrow: 1,
     width: screenWidth,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingBottom: 50,
+    backgroundColor: "#2C233D",
+
+
+    //justifyContent: "center",
+    //alignItems: "center",
+    //paddingBottom: 50,
   },
   container: {
     flex: 1,
     backgroundColor: "#2C233D",
     alignItems: "center",
   },
+  keyboardawarecontainer: {
+    flex: 1,
+    backgroundColor: "#2C233D",
+    alignItems: "center",
+    justifyContent: "center",
+    //height: 50,
+  },
+
+  dropdowncontent: {
+    minHeight: 160,
+    maxHeight: "35%",
+  },
+
+
   image: {
     width: "100%",
     height: "20%",
