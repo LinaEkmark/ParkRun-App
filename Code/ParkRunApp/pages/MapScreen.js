@@ -129,12 +129,11 @@ export default function MapScreen({ navigation, route }) {
 
   function addMarks() {
     return marks.map((val, index) => (
-      <Marker>
+      <Marker
         key={index}
         coordinate={{latitude:val.latitude,longitude:val.longitude}}
         pinColor={colours.secondary}
-        onPress={(e) => console.log(e.nativeEvent)}
-      </Marker>
+      />
     ));
   }
 
