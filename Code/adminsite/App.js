@@ -1,4 +1,4 @@
-//TODO: Spara parsead output till fil (firebase?)
+//TODO: Gör så man kan välja vilket parkrun man sparar till
 
 import { Button, StyleSheet, Text, View } from 'react-native';
 //import colours from '../ParkRunApp/config/colours';
@@ -34,7 +34,8 @@ function loadDoc() {
 
 async function parse(xml) {
   let input = xml.responseXML;
-  let output = [];
+  let polyline = [];
+  let marks = [];
   //let point = input.getElementsByTagName("Point")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue;
   //console.log(point);
   //let coords = latLng(point);
@@ -42,8 +43,7 @@ async function parse(xml) {
   //let line = input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0];
   //console.log(line);
 
-  // Koordinater är en 
-  let coords = input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue.split("\n");
+  /* let coords = input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue.split("\n");
   coords = coords.filter(function(entry) {return /\S/.test(entry);});
   console.log(coords);
   let i = 0;
@@ -56,16 +56,54 @@ async function parse(xml) {
       
       console.log(output[i]);
       i++;
+  } */
+  //Skriver om ovan för att ta med markörer också
+  let pmarks = input.getElementsByTagName("Placemark");
+  let i = 0;
+  while (pmarks[i]) {
+    if (pmarks[i].getElementsByTagName("LineString")[0]) {
+      // Gör antagandet att det bara kommer finnas en LineString
+      let coords = pmarks[i].getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue.split("\n");
+      coords = coords.filter(function(entry) {return /\S/.test(entry);});
+
+      let j = 0;
+      while(coords[j]) {
+        let coordser = latLng(coords[j]);
+        polyline.push({
+          latitude: parseFloat(coordser[0]),
+          longitude: parseFloat(coordser[1]),
+        });
+      
+        j++;
+      }
+      console.log(j, "coordinates")
+    } else if (pmarks[i].getElementsByTagName("Point")[0]) {
+      let mCoord = latLng(pmarks[i].getElementsByTagName("Point")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue);
+      let mName = pmarks[i].getElementsByTagName("name")[0].childNodes[0].nodeValue;
+      let mDesc;
+      try {
+        mDesc = pmarks[i].getElementsByTagName("description")[0].childNodes[0].nodeValue;
+      } catch { mDesc = "No description"; }
+      
+      marks.push({
+        latitude:mCoord[0],
+        longitude:mCoord[0],
+        name:mName,
+        description:mDesc});
+    }
+    i++;
   }
-  if (input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue) {
+  console.log(marks)
+  /* if (input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue) {
     console.log("Den jäveln finns");
     console.log("Den jäveln är " + input.getElementsByTagName("LineString")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue);
   }
   else {
     console.log("Den jäveln finns inte");
-  }
+  } */
   await setDoc (doc(db, "Parkruns", "parkruns-info", "Holyrood parkrun", "test-insert-geodata"), {
-    track: output 
+    track: polyline,
+    marks: marks 
 
   });
 }
