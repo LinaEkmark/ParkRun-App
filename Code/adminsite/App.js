@@ -70,8 +70,8 @@ async function parse(xml) {
       while(coords[j]) {
         let coordser = latLng(coords[j]);
         polyline.push({
-          latitude: parseFloat(coordser[0]),
-          longitude: parseFloat(coordser[1]),
+          latitude: coordser[0],
+          longitude: coordser[1],
         });
       
         j++;
@@ -87,7 +87,7 @@ async function parse(xml) {
       
       marks.push({
         latitude:mCoord[0],
-        longitude:mCoord[0],
+        longitude:mCoord[1],
         name:mName,
         description:mDesc});
     }
@@ -112,6 +112,6 @@ async function parse(xml) {
 function latLng(coords) {
   const cArray = coords.split(",");
   //Koordinater sparas som longitud sen latitud i kml. Det fixas nedan:
-  const reversedArray = [cArray[1], cArray[0]];
+  const reversedArray = [parseFloat(cArray[1]), parseFloat(cArray[0])];
   return reversedArray;
 }
