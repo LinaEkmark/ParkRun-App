@@ -83,6 +83,11 @@ export default function MapScreen({ navigation, route }) {
     fetchData();
   }, []);
 
+  const w = query(collection(db, "Parkruns", "parkruns-info", "Holyrood parkrun", "test-insert-geodata")); 
+  const querySnapshot = await getDocs(w);
+  querySnapshot.forEach((doc) => {
+    const importedTrack = doc.data().track;
+  });
 
   function checkBoxes() {
     return checkBoxText.map((text, index) => (
@@ -119,7 +124,7 @@ export default function MapScreen({ navigation, route }) {
               </Callout>
             </Marker>
             <Polyline
-              coordinates={[skat0,skat1,skat2,skat3]}
+              coordinates={[importedTrack]}
               strokeColor={colours.primary}
               strokeWidth={3}
               lineDashPattern={[5, 1]}
