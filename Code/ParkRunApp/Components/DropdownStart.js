@@ -7,6 +7,7 @@ const DropdownStart = ({ items, placeholder, initialValue, onValueChange }) => {
 
   const handleChange = (value) => {
     setSelectedValue(value);
+    console.log("valuet är  :" + value);
     onValueChange(value);
   };
   return (
@@ -32,11 +33,11 @@ const pickerSelectStyles = StyleSheet.create({
     fontSize: 16,
     paddingVertical: 12,
     paddingHorizontal: 10,
+    textAlign: "center",
     borderWidth: 1,
-    borderColor: "gray",
+    borderColor: "#FFA300",
     borderRadius: 4,
-    color: "black",
-    paddingRight: 30, // to ensure the text is never behind the icon
+    color: "#FFA330", // to ensure the text is never behind the icon
   },
   inputAndroid: {
     fontSize: 16,

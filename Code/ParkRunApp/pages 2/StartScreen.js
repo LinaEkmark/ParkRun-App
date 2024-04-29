@@ -1,5 +1,5 @@
 // Page1.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -11,15 +11,44 @@ import {
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
+//firebase database
+import db from "./firebase"
+
 
 export default function DetailsScreen({ navigation }) {
   const [Input, setInput] = useState("");
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    { label: "Sverige", value: "sve" },
-    { label: "England", value: "eng" },
-  ]);
+  // const [items, setItems] = useState([
+  //   { label: "Sverige", value: "sve" },
+  //   { label: "England", value: "eng" },
+  // ]);
+
+  //--------------------
+  // Getting countries from database
+  const [items, setItems] = useState(null); 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const items = await db.collection().get();
+        const countries = new Set();
+
+        items.forEach(doc => {
+          const country = doc.data().country;
+          if(country){
+            countries.add(country)
+          }
+        });
+
+        setCountries(Array.from(countries))
+      } catch (error) {
+        console.error("Error fetching data: ", error)
+      }
+
+    };
+    fetchData();
+  }, []);
+  //--------------------
 
   const handleInputChange = (Currentinput) => {
     setInput(Currentinput);

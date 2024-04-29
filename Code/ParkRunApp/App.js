@@ -16,6 +16,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import mapScreen from "./pages/MapScreen";
 import startscreen from "./pages/StartScreen";
 
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
