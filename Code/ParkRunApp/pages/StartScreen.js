@@ -10,30 +10,29 @@ import {
   TouchableOpacity,
   ScrollView,
   RefreshControl,
-  Dimensions
+  Dimensions,
+  Alert,
 } from "react-native";
 import DropdownStart from "../Components/DropdownStart";
 import ButtonStart from "../Components/ButtonStart";
 import SearchButtonStart from "../Components/searchButtonStart";
 import Logo from "../Design/parkrunAppLogo.png";
-import { Dropdown } from 'react-native-element-dropdown';
+import { Dropdown } from "react-native-element-dropdown";
 
 // //Database things
-import {collection, getDocs, query, where} from "firebase/firestore"
-import db from "../Firebase/firebase"
-
+import { collection, getDocs, query, where } from "firebase/firestore";
+import db from "../Firebase/firebase";
 
 export default function StartScreen({ navigation }) {
   const [Input, setInput] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
-  const [selectedParkrun, setSelectedParkrun] = useState(null);
+  const [selectedParkrunDropdown, setSelectedParkrunDropdown] = useState(null);
+  const [selectedParkrunSearch, setSelectedParkrunSearch] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [filteredParkruns, setFilteredParkruns] = useState([]);
   const textInputRef = useRef(null);
   const [openFlatList, setopenFlatList] = useState(true);
-
-  const valdPark = [selectedCountry, selectedCity, selectedParkrun];
 
   // const Countries = [
   //   { label: "Sverige", value: "sverige" },
@@ -46,12 +45,12 @@ export default function StartScreen({ navigation }) {
   const [Cities, setCities] = useState([]);
   const [Parkruns, setParkruns] = useState([]);
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         // QUERY ATTEMPT, read all documents from the collection 'Parkruns' where the field 'country' is not empty
-        const q = query(collection(db, 'Parkruns'), where('country', '!=', ''));
-        const qResult = await getDocs(q);  
+        const q = query(collection(db, "Parkruns"), where("country", "!=", ""));
+        const qResult = await getDocs(q);
 
         // Create empty arrays for countries, cities and parkruns
         const countries = [];
@@ -65,15 +64,15 @@ export default function StartScreen({ navigation }) {
           const parkrun = doc.data().name;
 
           // Check if the country, city or parkrun already exists in the array, do not add if already present
-          if (country && !countries.some(item => item.value === country)) {
+          if (country && !countries.some((item) => item.value === country)) {
             countries.push({ label: country, value: country });
           }
-          
-          if (city && !cities.some(item => item.value === city)) {
+
+          if (city && !cities.some((item) => item.value === city)) {
             cities.push({ label: city, value: city, key: country });
           }
-          if(parkrun && !parkruns.some(item => item.value === parkrun)){
-            parkruns.push({label: parkrun, value: parkrun, key: city});
+          if (parkrun && !parkruns.some((item) => item.value === parkrun)) {
+            parkruns.push({ label: parkrun, value: parkrun, key: city });
           }
         });
         setCountries(countries);
@@ -82,11 +81,9 @@ export default function StartScreen({ navigation }) {
 
         setCityList(cities);
         setParkrunList(parkruns);
-        
       } catch (error) {
-        console.error("Error fetching data: ", error)
+        console.error("Error fetching data: ", error);
       }
-
     };
     fetchData();
   }, []);
@@ -108,21 +105,13 @@ export default function StartScreen({ navigation }) {
   //   { label: "Stoke", value: "stoke", key: "stoke" },
   // ];
 
-
-
   //const [value, setValue] = useState(null);
   const [isCountryFocus, setIsCountryFocus] = useState(false);
   const [isCityFocus, setIsCityFocus] = useState(false);
   const [isParkrunFocus, setIsParkrunFocus] = useState(false);
 
-
   const [cityList, setCityList] = useState([]);
   const [parkrunList, setParkrunList] = useState([]);
-
-
-
-
-
 
   const filterParkruns = (text) => {
     const filteredParkruns = Parkruns.filter((parkrun) =>
@@ -155,11 +144,29 @@ export default function StartScreen({ navigation }) {
   };
 
   //go to map page
-  const handleSubmit = () => {
-    console.log(selectedParkrun);
-    navigation.navigate("Karta", {
-      selectedParkrun: selectedParkrun,
-    });
+  const handleSubmitSearchbar = () => {
+    try {
+      if (selectedParkrunSearch) {
+        navigation.navigate("Karta", {
+          selectedParkrun: selectedParkrunSearch,
+        });
+      } else {
+        Alert.alert(
+          "Error",
+          "No valid parkrun selected.",
+          [
+            {
+              text: "OK",
+              onPress: () => console.log("OK Pressed"),
+              style: "cancel",
+            },
+          ],
+          { cancelable: false }
+        );
+      }
+    } catch (error) {
+      console.error("Error navigating:", error.message);
+    }
   };
 
   function getCities(country) {
@@ -171,7 +178,7 @@ export default function StartScreen({ navigation }) {
       // If any other country is selected, return all cities
       return Cities;
     }
-  };
+  }
   function getParkruns(city) {
     if (city) {
       console.log("Selected city:", city);
@@ -183,13 +190,10 @@ export default function StartScreen({ navigation }) {
     }
   }
 
-
-
-
   return (
     <View style={styles.container}>
-    <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-      <Image source={Logo} style={styles.image} />
+      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+        <Image source={Logo} style={styles.image} />
         <Text style={styles.text}>Välkommen till parkruns</Text>
         <Text style={styles.text}>volontärdatabas!</Text>
         <Text style={styles.text2}>Hitta din park!</Text>
@@ -198,13 +202,16 @@ export default function StartScreen({ navigation }) {
           <View style={styles.searchContainer}>
             <TextInput
               ref={textInputRef}
-              style={styles.searchbar}
+              style={[styles.searchbar, Input.length > 10 && { fontSize: 20 }]}
               onChangeText={handleInputChange}
               value={Input}
               placeholder="Sök..."
               placeholderTextColor={"#FFA300"}
             />
-            <SearchButtonStart onPress={handleSubmit} style={styles.searchImage} />
+            <SearchButtonStart
+              onPress={handleSubmitSearchbar}
+              style={styles.searchImage}
+            />
           </View>
 
           <View style={styles.flatlistBox}>
@@ -219,7 +226,7 @@ export default function StartScreen({ navigation }) {
                   <TouchableOpacity
                     style={styles.flatListItemContainer}
                     onPress={() => {
-                      setSelectedParkrun(item.value);
+                      setSelectedParkrunSearch(item.value);
                       setInput(item.label); // Update TextInput value
                       textInputRef.current.blur(); // Hide keyboard
                       setopenFlatList(false);
@@ -236,7 +243,6 @@ export default function StartScreen({ navigation }) {
           <View style={styles.dropdownsections}>
             {/* <Image source={require(sweFlag)} style={styles.dropdownlistimage} /> */}
 
-
             {/*<DropdownStart
               items={Countries}
               placeholder="Välj Land"
@@ -245,95 +251,87 @@ export default function StartScreen({ navigation }) {
             />*/}
 
             <Dropdown
-                style={[styles.dropdown, isCountryFocus && { borderColor: 'blue' }]}
-                placeholderStyle={styles.placeholderStyle}
-                selectedTextStyle={styles.selectedTextStyle}
-                inputSearchStyle={styles.inputSearchStyle}
-                //iconStyle={styles.iconStyle}
-                data={Countries}
-                search
-                maxHeight={300}
-                labelField="label"
-                valueField="value"
-                placeholder={!isCountryFocus ? 'Select country' : '...'}
-                searchPlaceholder="Search..."
-                //value={value}
-                value={selectedCountry}
-                onFocus={() => setIsCountryFocus(true)}
-                onBlur={() => setIsCountryFocus(false)}
-                onChange={item => {
-                  //setSelectedCountry(item.value)
-                  setSelectedCountry(item.value)
-                  setSelectedCity("")
-                  setSelectedParkrun("")
-                  setCityList(getCities(item.value))
-
-                }}
-
+              style={[
+                styles.dropdown,
+                isCountryFocus && { borderColor: "blue" },
+              ]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              //iconStyle={styles.iconStyle}
+              data={Countries}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder={!isCountryFocus ? "Select country" : "..."}
+              searchPlaceholder="Search..."
+              //value={value}
+              value={selectedCountry}
+              onFocus={() => setIsCountryFocus(true)}
+              onBlur={() => setIsCountryFocus(false)}
+              onChange={(item) => {
+                //setSelectedCountry(item.value)
+                setSelectedCountry(item.value);
+                setSelectedCity("");
+                setSelectedParkrunDropdown("");
+                setCityList(getCities(item.value));
+              }}
             />
-
-
-
 
             <Dropdown
-                style={[styles.dropdown, isCityFocus && { borderColor: 'blue' }]}
-                placeholderStyle={styles.placeholderStyle}
-                selectedTextStyle={styles.selectedTextStyle}
-                inputSearchStyle={styles.inputSearchStyle}
-                //iconStyle={styles.iconStyle}
-                data={cityList}
-                search
-                maxHeight={300}
-                labelField="label"
-                valueField="value"
-                placeholder={!isCityFocus ? 'Select city' : '...'}
-                searchPlaceholder="Search..."
-                //value={value}
-                value={selectedCity}
-                onFocus={() => setIsCityFocus(true)}
-                onBlur={() => setIsCityFocus(false)}
-                onChange={item => {
-                  //setSelectedCountry(item.value)
-                  setSelectedCity(item.value)
-                  setSelectedParkrun("")
-                  setParkrunList(getParkruns(item.value))
-                }}
-
+              style={[styles.dropdown, isCityFocus && { borderColor: "blue" }]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              //iconStyle={styles.iconStyle}
+              data={cityList}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder={!isCityFocus ? "Select city" : "..."}
+              searchPlaceholder="Search..."
+              //value={value}
+              value={selectedCity}
+              onFocus={() => setIsCityFocus(true)}
+              onBlur={() => setIsCityFocus(false)}
+              onChange={(item) => {
+                //setSelectedCountry(item.value)
+                setSelectedCity(item.value);
+                setSelectedParkrunDropdown("");
+                setParkrunList(getParkruns(item.value));
+              }}
             />
-
-
-
-
-
 
             <Dropdown
-                style={[styles.dropdown, isParkrunFocus && { borderColor: 'blue' }]}
-                placeholderStyle={styles.placeholderStyle}
-                selectedTextStyle={styles.selectedTextStyle}
-                inputSearchStyle={styles.inputSearchStyle}
-                //iconStyle={styles.iconStyle}
-                data={parkrunList}
-                search
-                maxHeight={300}
-                labelField="label"
-                valueField="value"
-                placeholder={!isParkrunFocus ? 'Select parkrun' : '...'}
-                searchPlaceholder="Search..."
-                //value={value}
-                value={selectedParkrun}
-                onFocus={() => setIsParkrunFocus(true)}
-                onBlur={() => setIsParkrunFocus(false)}
-                onChange={item => {
-                  //setSelectedCountry(item.value)
-                  setSelectedParkrun(item.value)
-
-                }}
-
+              style={[
+                styles.dropdown,
+                isParkrunFocus && { borderColor: "blue" },
+              ]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              //iconStyle={styles.iconStyle}
+              data={parkrunList}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder={!isParkrunFocus ? "Select parkrun" : "..."}
+              searchPlaceholder="Search..."
+              //value={value}
+              value={selectedParkrunDropdown}
+              onFocus={() => setIsParkrunFocus(true)}
+              onBlur={() => setIsParkrunFocus(false)}
+              onChange={(item) => {
+                //setSelectedCountry(item.value)
+                setSelectedParkrunDropdown(item.value);
+              }}
             />
-
           </View>
 
-         {/* <View style={styles.dropdownsections}>
+          {/* <View style={styles.dropdownsections}>
 
             <DropdownStart
               items={getCities(selectedCountry)}
@@ -354,41 +352,42 @@ export default function StartScreen({ navigation }) {
 
           <View>
             <ButtonStart
-              onPress={() =>
-                navigation.navigate("Karta", {
-                  selectedParkrun: selectedParkrun,
-                })
-              }
+              onPress={() => {
+                try {
+                  if (selectedParkrunDropdown) {
+                    navigation.navigate("Karta", {
+                      selectedParkrun: selectedParkrunDropdown,
+                    });
+                  } else {
+                    Alert.alert(
+                      "Error",
+                      "No valid parkrun selected.",
+                      [
+                        {
+                          text: "OK",
+                          onPress: () => console.log("OK Pressed"),
+                          style: "cancel",
+                        },
+                      ],
+                      { cancelable: false }
+                    );
+                  }
+                } catch (error) {
+                  console.error("Error navigating:", error.message);
+                }
+              }}
               title="Bekräfta"
               buttonStyle={styles.confirmbutton}
               textStyle={styles.textConfirmButton}
             ></ButtonStart>
           </View>
         </View>
-        </ScrollView>
-      </View>
-    
+      </ScrollView>
+    </View>
   );
 }
 
-
-
-
-
-
-const screenWidth = Dimensions.get('window').width;
-
-
-
-
-
-
-
-
-
-
-
-
+const screenWidth = Dimensions.get("window").width;
 
 const styles = StyleSheet.create({
   scrollViewContainer: {
@@ -471,7 +470,7 @@ const styles = StyleSheet.create({
     maxHeight: 40,
   },
   flatlistBox: {
-    marginRight: "19%",
+    marginRight: "17%",
     width: "55%",
   },
   autocompleteList: {
@@ -504,22 +503,6 @@ const styles = StyleSheet.create({
     color: "#2B233D",
   },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   /*container: {
     backgroundColor: 'white',
     padding: 16,
@@ -534,15 +517,13 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 8,
     borderColor: "#FFA300",
-
-
   },
   icon: {
     marginRight: 5,
   },
   label: {
-    position: 'absolute',
-    backgroundColor: 'white',
+    position: "absolute",
+    backgroundColor: "white",
     left: 22,
     top: 8,
     zIndex: 999,
@@ -553,12 +534,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     color: "#CCCCCC",
-
   },
   selectedTextStyle: {
     fontSize: 16,
     textAlign: "center",
-    color: "#FFA300"
+    color: "#FFA300",
   },
   iconStyle: {
     width: 20,
@@ -579,7 +559,4 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     color: "#FFA330", // to ensure the text is never behind the icon
   },
-
-
-
 });
