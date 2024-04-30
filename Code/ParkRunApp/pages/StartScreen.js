@@ -29,10 +29,9 @@ export default function StartScreen({ navigation }) {
   const [selectedCity, setSelectedCity] = useState(null);
   const [selectedParkrunDropdown, setSelectedParkrunDropdown] = useState(null);
   const [selectedParkrunSearch, setSelectedParkrunSearch] = useState(null);
-  const [refreshing, setRefreshing] = useState(false);
+  const [showAutocompleteList, setshowAutocompleteList] = useState(true);
   const [filteredParkruns, setFilteredParkruns] = useState([]);
   const textInputRef = useRef(null);
-  const [openFlatList, setopenFlatList] = useState(true);
 
   // const Countries = [
   //   { label: "Sverige", value: "sverige" },
@@ -140,7 +139,7 @@ export default function StartScreen({ navigation }) {
   const handleInputChange = (Currentinput) => {
     setInput(Currentinput);
     filterParkruns(Currentinput);
-    setopenFlatList(true);
+    setshowAutocompleteList(true);
   };
 
   //go to map page
@@ -199,46 +198,67 @@ export default function StartScreen({ navigation }) {
         <Text style={styles.text2}>Hitta din park!</Text>
 
         <View style={styles.main}>
-          <View style={styles.searchContainer}>
-            <TextInput
-              ref={textInputRef}
-              style={[styles.searchbar, Input.length > 10 && { fontSize: 20 }]}
-              onChangeText={handleInputChange}
-              value={Input}
-              placeholder="Sök..."
-              placeholderTextColor={"#FFA300"}
-            />
-            <SearchButtonStart
-              onPress={handleSubmitSearchbar}
-              style={styles.searchImage}
-            />
+          <View style={styles.submain}>
+            <View style={styles.searchContainer}>
+              <TextInput
+                ref={textInputRef}
+                style={[
+                  styles.searchbar,
+                  Input.length > 13 && { fontSize: 20 },
+                  Input.length > 16 && { fontSize: 18 },
+                  Input.length > 18 && { fontSize: 15 },
+                  Input.length > 22 && { fontSize: 12 },
+                ]}
+                onChangeText={handleInputChange}
+                value={Input}
+                placeholder="Sök..."
+                placeholderTextColor={"#FFA300"}
+              />
+              <SearchButtonStart
+                onPress={handleSubmitSearchbar}
+                style={styles.searchImage}
+              />
+            </View>
+            {showAutocompleteList &&
+              filteredParkruns.length > 0 &&
+              Input !== "" && (
+                <View style={{ width: "100%", alignItems: "center", top: -8 }}>
+                  {filteredParkruns.map((parkrun, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => {
+                        setInput(parkrun.label);
+                        setSelectedParkrunSearch(parkrun.value);
+                        textInputRef.current.blur();
+                        setshowAutocompleteList(false);
+                      }}
+                      style={{
+                        width: "55%",
+                        backgroundColor: "white",
+                        borderWidth: 1,
+                        borderColor: "#FFA300",
+                        borderRadius: 8,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        position: "absolute",
+                        left: 57,
+                        zIndex: 10,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: "black",
+                          fontSize: 20,
+                        }}
+                      >
+                        {parkrun.label}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              )}
           </View>
 
-          <View style={styles.flatlistBox}>
-            {Input.length > 0 && openFlatList && (
-              <FlatList
-                style={[
-                  styles.autocompleteList,
-                  { maxHeight: autocompleteListMaxHeight },
-                ]}
-                data={filteredParkruns}
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    style={styles.flatListItemContainer}
-                    onPress={() => {
-                      setSelectedParkrunSearch(item.value);
-                      setInput(item.label); // Update TextInput value
-                      textInputRef.current.blur(); // Hide keyboard
-                      setopenFlatList(false);
-                    }}
-                  >
-                    <Text style={styles.FlatlistItemText}>{item.label}</Text>
-                  </TouchableOpacity>
-                )}
-                keyExtractor={(item) => item.value}
-              />
-            )}
-          </View>
           <Text style={styles.text2}>Eller välj:</Text>
           <View style={styles.dropdownsections}>
             {/* <Image source={require(sweFlag)} style={styles.dropdownlistimage} /> */}
@@ -404,7 +424,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: "20%",
+    height: 180,
     alignSelf: "center",
     resizeMode: "contain",
     marginTop: "15%",
@@ -412,12 +432,12 @@ const styles = StyleSheet.create({
   text: {
     color: "#FFFFFF",
     fontWeight: "bold",
-    fontSize: 15,
+    fontSize: 20,
   },
   text2: {
     color: "#FFFFFF",
     fontWeight: "bold",
-    fontSize: 15,
+    fontSize: 20,
     marginTop: "10%",
   },
   main: {
@@ -425,12 +445,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
+  submain: {
+    width: "100%",
+    flex: 1,
+    alignItems: "center",
+  },
   searchContainer: {
     flexDirection: "row",
     alignItems: "center",
+    height: 90,
   },
   searchbar: {
-    height: "70%",
+    height: "80%",
     width: "55%",
     borderColor: "#FFA300",
     borderWidth: 1,
@@ -439,7 +465,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     textAlign: "center",
     color: "#FFA300",
-    fontSize: 25,
+    fontSize: 26,
     fontWeight: "bold",
   },
   searchImage: {
@@ -447,12 +473,9 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 6,
     borderBottomRightRadius: 6,
     borderColor: "#FFA330",
-    maxHeight: "81%",
-    maxWidth: 100,
-    justifyContent: "center",
+    height: "80%",
+    width: 70,
     alignItems: "center",
-
-    //overflow: "hidden",
   },
   dropdownsections: {
     alignSelf: "center",
@@ -469,16 +492,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 6,
     maxHeight: 40,
   },
-  flatlistBox: {
-    marginRight: "17%",
-    width: "55%",
-  },
-  autocompleteList: {
-    backgroundColor: "#2C233D",
-    borderColor: "#FFA300",
-    borderWidth: 1,
-    borderRadius: 4,
-  },
+
   flatListItemContainer: {
     alignItems: "center", // Horizontally center the content
   },
