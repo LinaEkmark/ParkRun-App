@@ -56,31 +56,12 @@ export default function MapScreen({ navigation, route }) {
         let importedTrack = [];
         let importedMarks = [];
 
-        const w = query(collection(db, "Parkruns", "parkruns-info", "Holyrood parkrun")); 
-        const querySnapshot2 = await getDocs(w);
-        querySnapshot2.forEach(async (doc) => {
-          importedTrack.push(doc.data().track);
-          importedMarks.push(doc.data().marks);
-
-          //console.log("marks: ", importedMarks);
-        });
-        console.log("Track element: ", importedTrack[0][0].longitude);
-        /* let i = 0;
-        while(importedTrack[0][i]) {
-          track.push({
-            latitude: importedTrack[0][i].latitude,
-            longitude: importedTrack[0][i].longitude
-          });
-          i++;
-        } */
-        setTrack(importedTrack[0]);
-        setMarks(importedMarks[0]);
-        //console.log("point: ", skat0);
-
         querySnapshot.forEach(async (doc) => {
           const checkBoxData = doc.data().checkBoxText;
           const location = doc.data().location;
           //console.log("1: " + location.latitude + " " + location.longitude);
+          importedTrack.push(doc.data().track);
+          importedMarks.push(doc.data().marks);
 
           // Set the regionPosition as an object directly
           regionPosition = {
@@ -96,17 +77,18 @@ export default function MapScreen({ navigation, route }) {
           });
         });
 
-        //console.log("2: ", regionPosition);
+        setTrack(importedTrack[0]);
+        setMarks(importedMarks[0]);
 
-        //console.log("3: ", checkBoxText);
         setCheckBoxText(checkBoxText);
+
         setRegion({
           latitude: regionPosition.latitude,
           longitude: regionPosition.longitude,
           latitudeDelta: latDelta,
           longitudeDelta: longDelta,
         });
-        //console.log("4: ", region); // Log the region state after it has been updated
+
       } catch (e) {
         console.error("Error fetching data: ", e);
       } finally {

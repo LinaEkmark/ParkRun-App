@@ -28,7 +28,8 @@ function loadDoc() {
         parse(this);
       }
   };
-  xmlhttp.open("GET", "Skatås Parkrun.kml", true);
+  //xmlhttp.open("GET", "Billdalsparken parkrun.kml", true);
+  xmlhttp.open("GET", "Skatås parkrun.kml", true);
   xmlhttp.send();
 }
 
@@ -101,11 +102,11 @@ async function parse(xml) {
   else {
     console.log("Den jäveln finns inte");
   } */
-  await setDoc (doc(db, "Parkruns", "parkruns-info", "Holyrood parkrun", "test-insert-geodata"), {
+  await setDoc (doc(db, "Parkruns", "parkruns-info", "Skatås parkrun", "WTrVlzNX5iqIOPtr1tCO"), {
     track: polyline,
     marks: marks 
 
-  });
+  }, {merge: true});
 }
 
 

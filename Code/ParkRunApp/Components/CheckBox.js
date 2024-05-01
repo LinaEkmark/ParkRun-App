@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   openButton: {
     backgroundColor: "#00CEAE",
     borderRadius: 10,
-    paddingVertical: 5, // Adjust padding vertically as needed
+    paddingVertical: 9, // Adjust padding vertically as needed
     paddingHorizontal: 15, // Adjust padding horizontally as needed
     textAlign: "center",
     textAlignVertical: "center",
@@ -168,12 +168,14 @@ const styles = StyleSheet.create({
     width: 270, // Adjust the width as needed
     height: 180, // Adjust the height as needed
     marginBottom: 20, // Adjust the margin bottom as needed
+    borderRadius: 10, // Adjust the border radius as needed
   },
   modalImage: {
     width: "100%",
     height: "100%",
     resizeMode: "cover",
     borderRadius: 10, // Adjust the border radius as needed
+    paddingTop: 10, // Adjust the padding top as needed
   },
 
   greyBox: {
