@@ -232,18 +232,7 @@ export default function StartScreen({ navigation }) {
                         textInputRef.current.blur();
                         setshowAutocompleteList(false);
                       }}
-                      style={{
-                        width: "55%",
-                        backgroundColor: "white",
-                        borderWidth: 1,
-                        borderColor: "#FFA300",
-                        borderRadius: 8,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        position: "absolute",
-                        left: 57,
-                        zIndex: 10,
-                      }}
+                      style={styles.autocompletefield}
                     >
                       <Text
                         style={{
@@ -476,6 +465,18 @@ const styles = StyleSheet.create({
     height: "80%",
     width: 70,
     alignItems: "center",
+  },
+  autocompletefield: {
+    width: "55%",
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: "#FFA300",
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    left: 57,
+    zIndex: 10,
   },
   dropdownsections: {
     alignSelf: "center",
