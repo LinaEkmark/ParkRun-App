@@ -222,7 +222,7 @@ export default function StartScreen({ navigation }) {
             {showAutocompleteList &&
               filteredParkruns.length > 0 &&
               Input !== "" && (
-                <View style={{ width: "100%", alignItems: "center", top: -8 }}>
+                <View style={styles.autocompleteContainer}>
                   {filteredParkruns.map((parkrun, index) => (
                     <TouchableOpacity
                       key={index}
@@ -232,14 +232,9 @@ export default function StartScreen({ navigation }) {
                         textInputRef.current.blur();
                         setshowAutocompleteList(false);
                       }}
-                      style={styles.autocompletefield}
+                      style={styles.autocompleteItem}
                     >
-                      <Text
-                        style={{
-                          color: "black",
-                          fontSize: 20,
-                        }}
-                      >
+                      <Text style={styles.autocompleteText}>
                         {parkrun.label}
                       </Text>
                     </TouchableOpacity>
@@ -247,7 +242,6 @@ export default function StartScreen({ navigation }) {
                 </View>
               )}
           </View>
-
           <Text style={styles.text2}>Eller välj:</Text>
           <View style={styles.dropdownsections}>
             {/* <Image source={require(sweFlag)} style={styles.dropdownlistimage} /> */}
@@ -466,7 +460,14 @@ const styles = StyleSheet.create({
     width: 70,
     alignItems: "center",
   },
-  autocompletefield: {
+  autocompleteContainer: {
+    position: "absolute",
+    top: 82,
+    left: "14%",
+    width: "100%",
+    zIndex: 10,
+  },
+  autocompleteItem: {
     width: "55%",
     backgroundColor: "white",
     borderWidth: 1,
@@ -474,9 +475,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
-    position: "absolute",
-    left: 57,
-    zIndex: 10,
+  },
+  autocompleteText: {
+    color: "black",
+    fontSize: 20,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
   },
   dropdownsections: {
     alignSelf: "center",
