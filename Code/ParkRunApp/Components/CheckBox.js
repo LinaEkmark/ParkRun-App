@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,9 +10,22 @@ import {
 } from "react-native";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-const testbild = "../Design/skyltvidbänk.jpg";
-const CheckBox = ({ text, modalHeaderText }) => {
+
+//const testbild = "../Design/skyltvidbänk.jpg";
+const CheckBox = ({ text, modalHeaderText, imageURL }) => {
   const [modalVisible, setModalVisible] = useState(false);
+
+  // useEffect(() => {
+  //   const fetchImage = async () => {
+  //     const storageRef = getStorage();
+  //     const image = ref(storageRef, imageRef);
+  //     await getDownloadURL(image).then((url) => {
+  //       setImageURL(url);
+  //     });
+      
+  //   };
+  //   if(imageURL == undefined) fetchImage();
+  // }, []);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
@@ -41,15 +54,17 @@ const CheckBox = ({ text, modalHeaderText }) => {
         {/* Modal content */}
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalHeaderText}> {modalHeaderText}</Text>
+            <Text style={styles.modalHeaderText}> {text}</Text>
 
             <View style={styles.photoBox}>
-              <Image source={require(testbild)} style={styles.modalImage} />
+              <Image 
+              source={{uri: imageURL}} 
+              style={styles.modalImage} />
             </View>
 
             <View style={styles.greyBox}>
-              <Text>
-                Här ska det vara instruktoioner i hur man sätter upp Skylten
+              <Text style={styles.modalText}>
+                {modalHeaderText}
               </Text>
             </View>
 
@@ -83,6 +98,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#EC9B02",
+    fontSize: 18,
+    fontWeight: "bold",
   },
   buttonContainer: {
     borderRadius: 10,
@@ -122,11 +139,13 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     width: "80%",
-    height: "60%",
+    height: "80%",
   },
   modalText: {
-    textAlign: "center",
-    fontSize: 12,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    textAlign: "left",
+    fontSize: 18,
   },
   textStyle: {
     color: "white",
@@ -137,7 +156,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "left",
-    right: 80,
   },
 
   closeButtonContainer: {
