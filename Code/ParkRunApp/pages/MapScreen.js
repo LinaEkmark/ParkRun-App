@@ -10,16 +10,15 @@ import {
 } from "react-native";
 import CheckBox from "../Components/CheckBox";
 import MapView, { Marker, Callout, Polyline } from "react-native-maps";
+import * as Location from "expo-location";
 //import KMLreader from "../Utils/KMLreader";
 
 import colours from "../config/colours";
 //import { CustomFonts } from './ParkRunFont'; // Behöver hjälp i hur jag ska importera egen font
 
-
 //Database things
-import {collection, getDocs, query, where} from "firebase/firestore"
-import db from "../Firebase/firebase"
-
+import { collection, getDocs, query, where } from "firebase/firestore";
+import db from "../Firebase/firebase";
 
 export default function MapScreen({ navigation, route }) {
   //load the parkrun from the previous screen
@@ -31,17 +30,21 @@ export default function MapScreen({ navigation, route }) {
   const latDelta = 0.015;
   const longDelta = 0.015;
 
-  const reee = [{latitude: 57.7035863, longitude: 12.0378259}, 
-    {latitude: 57.7036843, longitude: 12.0380968}];
-  
+  const reee = [
+    { latitude: 57.7035863, longitude: 12.0378259 },
+    { latitude: 57.7036843, longitude: 12.0380968 },
+  ];
+
   const [track, setTrack] = useState([reee]);
-  const [marks, setMarks] = useState([{
-    latitude: reee[0].latitude,
-    longitude: reee[0].longitude,
-    name: "null",
-    description: "null"
-  }]);
-    
+  const [marks, setMarks] = useState([
+    {
+      latitude: reee[0].latitude,
+      longitude: reee[0].longitude,
+      name: "null",
+      description: "null",
+    },
+  ]);
+
   //loading state
   const [isLoading, setIsLoading] = useState(true);
 
@@ -49,7 +52,9 @@ export default function MapScreen({ navigation, route }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const q = query(collection(db, "Parkruns/parkruns-info/" + selectedParkrun));
+        const q = query(
+          collection(db, "Parkruns/parkruns-info/" + selectedParkrun)
+        );
         const querySnapshot = await getDocs(q);
         let checkBoxText = [];
         let regionPosition = {};
@@ -66,7 +71,7 @@ export default function MapScreen({ navigation, route }) {
           // Set the regionPosition as an object directly
           regionPosition = {
             latitude: location.latitude,
-            longitude: location.longitude
+            longitude: location.longitude,
           };
 
           // Sort the keys of the checkBoxData object
@@ -88,7 +93,6 @@ export default function MapScreen({ navigation, route }) {
           latitudeDelta: latDelta,
           longitudeDelta: longDelta,
         });
-
       } catch (e) {
         console.error("Error fetching data: ", e);
       } finally {
@@ -101,12 +105,63 @@ export default function MapScreen({ navigation, route }) {
   //console.log("AAAA ", track);
   //console.log("marks: ", marks);
 
+  const initialLocation = { latitude: 37.771707, longitude: -122.4053769 };
+  const [myLocation, setMyLocation] = useState(null);
+
+  useEffect(() => {
+    _getLocation(); // Initial location fetch
+
+    const locationInterval = setInterval(() => {
+      _getLocation(); // Fetch location every 5 seconds
+    }, 5000);
+
+    // Clean up interval on component unmount
+    return () => clearInterval(locationInterval);
+  }, []);
+
+  const _getLocation = async () => {
+    try {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+        return;
+      }
+
+      Location.watchPositionAsync(
+        { accuracy: Location.Accuracy.High, timeInterval: 5000 },
+        (newLocation) => {
+          setMyLocation(newLocation.coords);
+          console.log("new Location");
+        }
+      );
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  function addPosition() {
+    if (myLocation) {
+      return (
+        <Marker
+          coordinate={{
+            latitude: myLocation.latitude,
+            longitude: myLocation.longitude,
+          }}
+          title="Du är här"
+          pinColor="#007bff"
+        />
+      );
+    }
+  }
+
   function checkBoxes() {
     return checkBoxText.map((text, index) => (
-      <CheckBox key={index} 
-                text={text[0]} 
-                modalHeaderText={text[1]}
-                imageURL={text[2]} />
+      <CheckBox
+        key={index}
+        text={text[0]}
+        modalHeaderText={text[1]}
+        imageURL={text[2]}
+      />
     ));
   }
 
@@ -114,7 +169,7 @@ export default function MapScreen({ navigation, route }) {
     return marks.map((val, index) => (
       <Marker
         key={index}
-        coordinate={{latitude:val.latitude,longitude:val.longitude}}
+        coordinate={{ latitude: val.latitude, longitude: val.longitude }}
         pinColor={colours.secondary}
       />
     ));
@@ -122,8 +177,15 @@ export default function MapScreen({ navigation, route }) {
 
   if (isLoading && region === null) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#2C233D", }}>
-        <Text style={{color: "#FFA330",}}>Loading...</Text>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#2C233D",
+        }}
+      >
+        <Text style={{ color: "#FFA330" }}>Loading...</Text>
       </View>
     );
   }
@@ -137,6 +199,7 @@ export default function MapScreen({ navigation, route }) {
             initialRegion={region}
             onRegionChangeComplete={(region) => setRegion(region)}
           >
+            {addPosition()}
             {addMarks()}
             <Polyline
               coordinates={track}
