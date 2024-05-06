@@ -116,9 +116,25 @@ export default function MapScreen({ navigation, route }) {
         key={index}
         coordinate={{latitude:val.latitude,longitude:val.longitude}}
         pinColor={val.colour}
-      />
+      >
+        {/* Gör pinsen till balla boxar med siffror */}
+        <View 
+          style={styles.marker}
+          backgroundColor={val.colour}
+        >
+          <Text>{index}</Text>
+        </View>
+      </Marker>
     ));
-  }
+  }/* 
+
+  function CustomMarker() {
+    return (
+      <View style={styles.marker}>
+        <Text style={styles.color}>Tokyo</Text>
+      </View>
+    );
+  } */
 
   if (isLoading && region === null) {
     return (
@@ -168,6 +184,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#D9D9D9",
     justifyContent: "center",
     borderRadius: 10, // Gör såhär för att få snyggare hörn på boxar
+  },
+  marker: {
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    //backgroundColor: colours.green,
+    borderColor: "#eee",
+    borderRadius: 5,
+    elevation: 10,
   },
 });
 
