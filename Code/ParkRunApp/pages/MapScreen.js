@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   },
   marker: {
     paddingVertical: 10,
-    paddingHorizontal: 30,
+    paddingHorizontal: 15,
     //backgroundColor: colours.green,
     borderColor: "#eee",
     borderRadius: 5,
