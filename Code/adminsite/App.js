@@ -82,6 +82,7 @@ async function parse(xml) {
       let mCoord = latLng(pmarks[i].getElementsByTagName("Point")[0].getElementsByTagName("coordinates")[0].childNodes[0].nodeValue);
       let mName = pmarks[i].getElementsByTagName("name")[0].childNodes[0].nodeValue;
       let mDesc;
+      let mColour = getMarkerColour(pmarks[i].getElementsByTagName("styleUrl")[0].childNodes[0].nodeValue);
       try {
         mDesc = pmarks[i].getElementsByTagName("description")[0].childNodes[0].nodeValue;
       } catch { mDesc = "No description"; }
@@ -90,7 +91,8 @@ async function parse(xml) {
         latitude:mCoord[0],
         longitude:mCoord[1],
         name:mName,
-        description:mDesc});
+        description:mDesc,
+        colour:mColour});
     }
     i++;
   }
@@ -115,4 +117,11 @@ function latLng(coords) {
   //Koordinater sparas som longitud sen latitud i kml. Det fixas nedan:
   const reversedArray = [parseFloat(cArray[1]), parseFloat(cArray[0])];
   return reversedArray;
+}
+
+function getMarkerColour(m) {
+  const n = m.split("-")[2];
+  let h = "#";
+  h = h.concat(n);
+  return h;
 }

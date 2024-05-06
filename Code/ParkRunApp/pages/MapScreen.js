@@ -115,7 +115,7 @@ export default function MapScreen({ navigation, route }) {
       <Marker
         key={index}
         coordinate={{latitude:val.latitude,longitude:val.longitude}}
-        pinColor={colours.secondary}
+        pinColor={val.colour}
       />
     ));
   }
