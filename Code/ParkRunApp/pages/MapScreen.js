@@ -122,19 +122,11 @@ export default function MapScreen({ navigation, route }) {
           style={styles.marker}
           backgroundColor={val.colour}
         >
-          <Text>{index}</Text>
+          <Text color={colours.white}>{index + 1}</Text>
         </View>
       </Marker>
     ));
-  }/* 
-
-  function CustomMarker() {
-    return (
-      <View style={styles.marker}>
-        <Text style={styles.color}>Tokyo</Text>
-      </View>
-    );
-  } */
+  }
 
   if (isLoading && region === null) {
     return (
