@@ -120,8 +120,12 @@ function latLng(coords) {
 }
 
 function getMarkerColour(m) {
-  const n = m.split("-")[2];
+  let n = m.split("-");
+  let o;
+  // Who needs consistent icon names amirite
+  if (n[2].length > 2) { o = n[2]; } 
+  else { o = n[4]; }
   let h = "#";
-  h = h.concat(n);
+  h = h.concat(o);
   return h;
 }
