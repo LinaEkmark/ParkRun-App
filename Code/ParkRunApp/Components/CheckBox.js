@@ -11,22 +11,8 @@ import {
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 
-//const testbild = "../Design/skyltvidbänk.jpg";
 const CheckBox = ({ text, modalHeaderText, imageURL }) => {
   const [modalVisible, setModalVisible] = useState(false);
-
-  // useEffect(() => {
-  //   const fetchImage = async () => {
-  //     const storageRef = getStorage();
-  //     const image = ref(storageRef, imageRef);
-  //     await getDownloadURL(image).then((url) => {
-  //       setImageURL(url);
-  //     });
-      
-  //   };
-  //   if(imageURL == undefined) fetchImage();
-  // }, []);
-
   const toggleModal = () => {
     setModalVisible(!modalVisible);
   };
@@ -89,12 +75,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 10,
     marginTop: 10,
-    position: "relative", // Ensure the parent container uses relative positioning
+    position: "relative",
   },
   textContainer: {
     marginTop: 10,
     marginLeft: 30,
-    position: "absolute", // Use absolute positioning for the text container
+    position: "absolute",
   },
   text: {
     color: "#EC9B02",
@@ -106,15 +92,15 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     width: 76,
     height: 35,
-    right: 15, // Position the button container to the right edge of the parent container
-    top: 7, // Adjust top position as needed
-    position: "absolute", // Use absolute positioning for the button container
+    right: 15,
+    top: 7,
+    position: "absolute",
   },
   openButton: {
     backgroundColor: "#00CEAE",
     borderRadius: 10,
-    paddingVertical: 9, // Adjust padding vertically as needed
-    paddingHorizontal: 15, // Adjust padding horizontally as needed
+    paddingVertical: 9,
+    paddingHorizontal: 15,
     textAlign: "center",
     textAlignVertical: "center",
   },
@@ -165,25 +151,25 @@ const styles = StyleSheet.create({
   },
   photoBox: {
     backgroundColor: "#D9D9D9",
-    width: 270, // Adjust the width as needed
-    height: 180, // Adjust the height as needed
-    marginBottom: 20, // Adjust the margin bottom as needed
-    borderRadius: 10, // Adjust the border radius as needed
+    width: 270,
+    height: 180,
+    marginBottom: 20,
+    borderRadius: 10,
   },
   modalImage: {
     width: "100%",
     height: "100%",
     resizeMode: "cover",
-    borderRadius: 10, // Adjust the border radius as needed
-    paddingTop: 10, // Adjust the padding top as needed
+    borderRadius: 10,
+    paddingTop: 10,
   },
 
   greyBox: {
     backgroundColor: "#D9D9D9",
-    width: 270, // Adjust the width as needed
-    height: 140, // Adjust the height as needed
-    marginBottom: 20, // Adjust the margin bottom as needed
-    borderRadius: 10, // Adjust the border radius as needed
+    width: 270,
+    height: 140,
+    marginBottom: 20,
+    borderRadius: 10,
   },
 });
 
