@@ -11,7 +11,6 @@ import {
 import CheckBox from "../Components/CheckBox";
 import MapView, { Marker, Callout, Polyline } from "react-native-maps";
 import * as Location from "expo-location";
-//import KMLreader from "../Utils/KMLreader";
 
 import colours from "../config/colours";
 
