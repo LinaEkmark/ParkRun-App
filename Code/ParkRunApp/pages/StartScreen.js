@@ -227,7 +227,6 @@ export default function StartScreen({ navigation }) {
               placeholderStyle={styles.placeholderStyle}
               selectedTextStyle={styles.selectedTextStyle}
               inputSearchStyle={styles.inputSearchStyle}
-              //iconStyle={styles.iconStyle}
               data={Countries}
               search
               maxHeight={300}
@@ -235,12 +234,10 @@ export default function StartScreen({ navigation }) {
               valueField="value"
               placeholder={!isCountryFocus ? "Select country" : "..."}
               searchPlaceholder="Search..."
-              //value={value}
               value={selectedCountry}
               onFocus={() => setIsCountryFocus(true)}
               onBlur={() => setIsCountryFocus(false)}
               onChange={(item) => {
-                //setSelectedCountry(item.value)
                 setSelectedCountry(item.value);
                 setSelectedCity("");
                 setSelectedParkrunDropdown("");
@@ -253,7 +250,6 @@ export default function StartScreen({ navigation }) {
               placeholderStyle={styles.placeholderStyle}
               selectedTextStyle={styles.selectedTextStyle}
               inputSearchStyle={styles.inputSearchStyle}
-              //iconStyle={styles.iconStyle}
               data={cityList}
               search
               maxHeight={300}
@@ -261,12 +257,10 @@ export default function StartScreen({ navigation }) {
               valueField="value"
               placeholder={!isCityFocus ? "Select city" : "..."}
               searchPlaceholder="Search..."
-              //value={value}
               value={selectedCity}
               onFocus={() => setIsCityFocus(true)}
               onBlur={() => setIsCityFocus(false)}
               onChange={(item) => {
-                //setSelectedCountry(item.value)
                 setSelectedCity(item.value);
                 setSelectedParkrunDropdown("");
                 setParkrunList(getParkruns(item.value));
@@ -281,7 +275,6 @@ export default function StartScreen({ navigation }) {
               placeholderStyle={styles.placeholderStyle}
               selectedTextStyle={styles.selectedTextStyle}
               inputSearchStyle={styles.inputSearchStyle}
-              //iconStyle={styles.iconStyle}
               data={parkrunList}
               search
               maxHeight={300}
@@ -289,12 +282,10 @@ export default function StartScreen({ navigation }) {
               valueField="value"
               placeholder={!isParkrunFocus ? "Select parkrun" : "..."}
               searchPlaceholder="Search..."
-              //value={value}
               value={selectedParkrunDropdown}
               onFocus={() => setIsParkrunFocus(true)}
               onBlur={() => setIsParkrunFocus(false)}
               onChange={(item) => {
-                //setSelectedCountry(item.value)
                 setSelectedParkrunDropdown(item.value);
               }}
             />
@@ -445,7 +436,7 @@ const styles = StyleSheet.create({
   },
 
   flatListItemContainer: {
-    alignItems: "center", // Horizontally center the content
+    alignItems: "center",
   },
   FlatlistItemText: {
     color: "#FFA300",
@@ -467,16 +458,9 @@ const styles = StyleSheet.create({
     letterSpacing: 0.25,
     color: "#2B233D",
   },
-
-  /*container: {
-    backgroundColor: 'white',
-    padding: 16,
-  },*/
   dropdown: {
     marginTop: "5%",
     height: 50,
-    //borderColor: 'gray',
-    //textAlign: "center",
     borderWidth: 1,
     borderRadius: 8,
     paddingVertical: 10,
@@ -522,6 +506,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#FFA300",
     borderRadius: 6,
-    color: "#FFA330", // to ensure the text is never behind the icon
+    color: "#FFA330",
   },
 });
