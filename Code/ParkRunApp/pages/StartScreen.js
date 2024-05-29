@@ -33,13 +33,6 @@ export default function StartScreen({ navigation }) {
   const [filteredParkruns, setFilteredParkruns] = useState([]);
   const textInputRef = useRef(null);
 
-  // const Countries = [
-  //   { label: "Sverige", value: "sverige" },
-  //   { label: "Scottland", value: "scottland" },
-  //   { label: "England", value: "england" },
-  // ];
-
-  //---------
   const [Countries, setCountries] = useState([]);
   const [Cities, setCities] = useState([]);
   const [Parkruns, setParkruns] = useState([]);
@@ -86,25 +79,7 @@ export default function StartScreen({ navigation }) {
     };
     fetchData();
   }, []);
-  //---------
 
-  // const Cities = [
-  //   { label: "Göteborg", value: "göteborg", key: "sverige" },
-  //   { label: "Stockholm", value: "stockholm", key: "sverige" },
-  //   { label: "London", value: "london", key: "england" },
-  //   { label: "Edinburg", value: "edinburg", key: "scottland" },
-  // ];
-
-  // const Parkruns = [
-  //   { label: "Skatås", value: "skatås", key: "göteborg" },
-  //   { label: "Billdal", value: "billdal", key: "göteborg" },
-  //   { label: "Haga", value: "haga", key: "stockholm" },
-  //   { label: "London", value: "london", key: "london" },
-  //   { label: "Edinburg", value: "edinburg", key: "edinburg" },
-  //   { label: "Stoke", value: "stoke", key: "stoke" },
-  // ];
-
-  //const [value, setValue] = useState(null);
   const [isCountryFocus, setIsCountryFocus] = useState(false);
   const [isCityFocus, setIsCityFocus] = useState(false);
   const [isParkrunFocus, setIsParkrunFocus] = useState(false);
@@ -244,15 +219,6 @@ export default function StartScreen({ navigation }) {
           </View>
           <Text style={styles.text2}>Eller välj:</Text>
           <View style={styles.dropdownsections}>
-            {/* <Image source={require(sweFlag)} style={styles.dropdownlistimage} /> */}
-
-            {/*<DropdownStart
-              items={Countries}
-              placeholder="Välj Land"
-              initialValue={selectedCountry}
-              onValueChange={setSelectedCountry}
-            />*/}
-
             <Dropdown
               style={[
                 styles.dropdown,
@@ -333,26 +299,6 @@ export default function StartScreen({ navigation }) {
               }}
             />
           </View>
-
-          {/* <View style={styles.dropdownsections}>
-
-            <DropdownStart
-              items={getCities(selectedCountry)}
-              placeholder="Välj Stad"
-              initialValue={selectedCity}
-              onValueChange={setSelectedCity}
-            />
-          </View>
-          <View style={[styles.dropdownsections, { marginBottom: "8%" }]}>
-
-            <DropdownStart
-              items={getParkruns(selectedCity)}
-              placeholder="Välj Parkrun"
-              initialValue={selectedParkrun}
-              onValueChange={setSelectedParkrun}
-            />
-          </View>*/}
-
           <View>
             <ButtonStart
               onPress={() => {

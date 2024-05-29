@@ -14,7 +14,6 @@ import * as Location from "expo-location";
 //import KMLreader from "../Utils/KMLreader";
 
 import colours from "../config/colours";
-//import { CustomFonts } from './ParkRunFont'; // Behöver hjälp i hur jag ska importera egen font
 
 //Database things
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -64,7 +63,6 @@ export default function MapScreen({ navigation, route }) {
         querySnapshot.forEach(async (doc) => {
           const checkBoxData = doc.data().checkBoxText;
           const location = doc.data().location;
-          //console.log("1: " + location.latitude + " " + location.longitude);
           importedTrack.push(doc.data().track);
           importedMarks.push(doc.data().marks);
 
@@ -102,8 +100,6 @@ export default function MapScreen({ navigation, route }) {
     };
     fetchData();
   }, []);
-  //console.log("AAAA ", track);
-  //console.log("marks: ", marks);
 
   const initialLocation = { latitude: 37.771707, longitude: -122.4053769 };
   const [myLocation, setMyLocation] = useState(null);
@@ -114,8 +110,6 @@ export default function MapScreen({ navigation, route }) {
     const locationInterval = setInterval(() => {
       _getLocation(); // Fetch location every 5 seconds
     }, 5000);
-
-    // Clean up interval on component unmount
     return () => clearInterval(locationInterval);
   }, []);
 
@@ -233,28 +227,3 @@ const styles = StyleSheet.create({
     borderRadius: 10, // Gör såhär för att få snyggare hörn på boxar
   },
 });
-
-const skat0 = {
-  latitude: 57.7047,
-  longitude: 12.037,
-  latitudeDelta: 0.01,
-  longitudeDelta: 0.01,
-};
-const skat1 = {
-  latitude: 57.7075,
-  longitude: 12.0408,
-  latitudeDelta: 0.01,
-  longitudeDelta: 0.01,
-};
-const skat2 = {
-  latitude: 57.7047,
-  longitude: 12.0447,
-  latitudeDelta: 0.01,
-  longitudeDelta: 0.01,
-};
-const skat3 = {
-  latitude: 57.7047,
-  longitude: 12.037,
-  latitudeDelta: 0.01,
-  longitudeDelta: 0.01,
-};
