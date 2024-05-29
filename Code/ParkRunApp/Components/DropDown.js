@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import RNPickerSelect from 'react-native-picker-select';
 import { View, Text } from 'react-native';
 
-// googlad fram vet knappt hur den funkar 
-
 const Dropdown = () => {
   const [selectedValue, setSelectedValue] = useState('option1'); // Set initial value to 'option1'
   const placeholder = {
